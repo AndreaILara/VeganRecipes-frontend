@@ -1,0 +1,84 @@
+import React, { useEffect, useContext } from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Recipes from "./pages/Recipes";
+import Profile from "./pages/Profile";
+import NotFound from "./pages/NotFound";
+import Nosotros from "./pages/Nosotros";
+import Contacto from "./pages/Contacto";
+import Terminos from "./pages/Terminos";
+import Faq from "./pages/Faq";
+import Cookies from "./pages/Cookies";
+import Privacidad from "./pages/Privacidad";
+import "/style.css";
+import "toastify-js/src/toastify.css";
+import { apiRequest } from "./utils/apiRequest.js";
+import { AuthProvider, AuthContext } from "./context/AuthContext";
+
+const App = () => {
+  const { user, setUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    const validateToken = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      try {
+        const res = await apiRequest({ endpoint: "users/profile", method: "GET" }); // Asegura que la ruta sea correcta
+
+        if (res?.id) {
+          setUser(res);
+          localStorage.setItem("user", JSON.stringify(res));
+        } else {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          setUser(null);
+        }
+      } catch (error) {
+        console.error("Error al validar el token:", error);
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        setUser(null);
+      }
+    };
+
+    validateToken();
+  }, [setUser]);
+
+  return (
+    <Router>
+      <Navbar />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={!user ? <Login /> : <Navigate to="/perfil" />} />
+          <Route path="/register" element={!user ? <Register /> : <Navigate to="/perfil" />} />
+          <Route path="/recetas" element={<Recipes />} />
+          <Route path="/perfil" element={user ? <Profile /> : <Navigate to="/login" />} />
+
+          {/* Rutas adicionales */}
+          <Route path="/nosotros" element={<Nosotros />} />
+          <Route path="/contacto" element={<Contacto />} />
+          <Route path="/terminos" element={<Terminos />} />
+          <Route path="/faq" element={<Faq />} />
+          <Route path="/cookies" element={<Cookies />} />
+          <Route path="/privacidad" element={<Privacidad />} />
+
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      <Footer />
+    </Router>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <AuthProvider>
+    <App />
+  </AuthProvider>
+);

@@ -1,0 +1,85 @@
+.featured-recipes {
+  text-align: center;
+  padding: var(--spacing-lg) 0;
+  background-color: var(--color-background);
+  overflow: hidden;
+}
+
+.featured-recipes h2 {
+  font-size: 2rem;
+  color: var(--color-dark);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Carrusel */
+.carousel {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-track {
+  display: flex;
+  gap: var(--spacing-md);
+  width: calc(250px * 20); /* Duplicamos las 10 recetas */
+  animation: scroll 30s linear infinite;
+}
+
+/* Tarjetas */
+.recipe-card {
+  background: white;
+  padding: var(--spacing-sm);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.recipe-card:hover {
+  transform: scale(1.05);
+}
+
+/* Imagen */
+.recipe-card img {
+  width: 100%;
+  height: 180px;
+  border-radius: var(--border-radius-sm);
+  object-fit: cover;
+}
+
+/* Título */
+.recipe-card h3 {
+  color: var(--color-primary);
+  font-size: 1.2rem;
+  margin: var(--spacing-sm) 0;
+}
+
+/* Botón */
+.recipe-card button {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+  margin-top: auto;
+}
+
+.recipe-card button:hover {
+  background-color: var(--color-hover);
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

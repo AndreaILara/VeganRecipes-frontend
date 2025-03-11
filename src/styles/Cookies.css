@@ -1,0 +1,72 @@
+/* Página de Política de Cookies */
+.cookies-page {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background: white;
+  border-radius: var(--border-radius-md);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hero de la página */
+.hero-cookies {
+  text-align: center;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  color: white;
+  padding: 40px 20px;
+  border-radius: var(--border-radius-md);
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hero-cookies h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.hero-cookies p {
+  font-size: 1rem;
+}
+
+/* Sección de contenido */
+.content h2 {
+  color: var(--color-primary);
+  margin-top: var(--spacing-md);
+}
+
+.content p {
+  line-height: 1.6;
+  margin-bottom: var(--spacing-sm);
+}
+
+.content ul {
+  padding-left: 20px;
+  margin-bottom: var(--spacing-md);
+}
+
+.content li {
+  line-height: 1.6;
+  margin-bottom: var(--spacing-sm);
+}
+
+.content a {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.content a:hover {
+  color: var(--color-hover);
+}

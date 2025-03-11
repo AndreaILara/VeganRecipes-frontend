@@ -1,0 +1,51 @@
+.why-vegan {
+  background-color: var(--color-light);
+  padding: var(--spacing-lg) 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.why-vegan .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+.why-vegan-content {
+  max-width: 50%;
+}
+
+.why-vegan h2 {
+  font-size: 2rem;
+  color: var(--color-dark);
+  margin-bottom: var(--spacing-sm);
+}
+
+.why-vegan p {
+  font-size: 1.2rem;
+  color: var(--color-dark);
+  margin-bottom: var(--spacing-md);
+}
+
+.why-vegan button {
+  background-color: var(--color-primary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.why-vegan button:hover {
+  background-color: var(--color-hover);
+}
+
+.why-vegan-image img {
+  max-width: 600px;
+  width: 100%;
+  height: auto;
+}

@@ -1,0 +1,11 @@
+.section {
+  text-align: center;
+  padding: var(--spacing-lg);
+  background: var(--color-light);
+  margin: var(--spacing-md) 0;
+}
+
+.section h2 {
+  color: var(--color-dark);
+  margin-bottom: var(--spacing-sm);
+}
