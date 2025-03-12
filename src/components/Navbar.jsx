@@ -16,6 +16,7 @@ const Navbar = () => {
             <img src={logo} alt="Tu Rincón Vegano" />
           </Link>
         </div>
+
         <ul className="navbar-menu">
           <li><Link to="/">Inicio</Link></li>
           <li
@@ -35,12 +36,13 @@ const Navbar = () => {
           </li>
         </ul>
 
-        {/* Si el usuario está logueado */}
         {user ? (
           <div className="user-menu">
-            <Link to="/perfil" className="btn-profile">Perfil</Link>
-            <Link to="/favoritos" className="btn-favorites">Favoritos</Link>
-            {user.role === "admin" && <Link to="/admin" className="btn-admin">Añadir Receta</Link>}
+            <Link to="/perfil" className="user-profile">
+              <img src={user.avatar || "/default-avatar.png"} alt="Perfil" className="profile-pic-navbar" />
+            </Link>
+            <Link to="/favoritos" className="btn-favorites">❤️</Link>
+            {user.role === "admin" && <Link to="/admin" className="btn-admin">➕ Añadir Receta</Link>}
             <button onClick={logout} className="btn-logout">Cerrar sesión</button>
           </div>
         ) : (

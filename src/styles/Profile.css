@@ -1,0 +1,42 @@
+.profile-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--color-background);
+}
+
+.profile-container {
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  text-align: center;
+}
+
+.profile-pic-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.profile-pic-large {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--color-primary);
+}
+
+.file-input {
+  margin-top: 10px;
+}
+
+.btn-update, .btn-delete {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  cursor: pointer;
+}

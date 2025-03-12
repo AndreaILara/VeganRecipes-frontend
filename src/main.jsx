@@ -20,7 +20,7 @@ import "toastify-js/src/toastify.css";
 import { apiRequest } from "./utils/apiRequest.js";
 import { AuthProvider, AuthContext } from "./context/AuthContext";
 
-const App = () => {
+const AppRoutes = () => {
   const { user, setUser } = useContext(AuthContext);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const App = () => {
       if (!token) return;
 
       try {
-        const res = await apiRequest({ endpoint: "users/profile", method: "GET" }); // Asegura que la ruta sea correcta
+        const res = await apiRequest({ endpoint: "users/profile", method: "GET" });
 
         if (res?.id) {
           setUser(res);
@@ -40,7 +40,7 @@ const App = () => {
           setUser(null);
         }
       } catch (error) {
-        console.error("Error al validar el token:", error);
+        console.error("❌ Error al validar el token:", error);
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         setUser(null);
@@ -79,6 +79,6 @@ const App = () => {
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <AuthProvider>
-    <App />
+    <AppRoutes />
   </AuthProvider>
 );

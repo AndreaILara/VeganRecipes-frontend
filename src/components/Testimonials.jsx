@@ -1,31 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "../styles/Testimonials.css";
-import { apiRequest } from "../utils/apiRequest";
 
 const Testimonials = () => {
-  const [testimonials, setTestimonials] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  useEffect(() => {
-    const fetchTestimonials = async () => {
-      try {
-        const response = await apiRequest({ endpoint: "/testimonials", method: "GET" });
-        if (response.ok) {
-          const data = await response.json();
-          setTestimonials(data.length > 0 ? [...data, ...data] : [...fallbackTestimonials, ...fallbackTestimonials]);
-        } else {
-          setTestimonials([...fallbackTestimonials, ...fallbackTestimonials]);
-        }
-      } catch (error) {
-        console.error("Error al obtener testimonios:", error);
-        setTestimonials([...fallbackTestimonials, ...fallbackTestimonials]);
-      }
-    };
-
-    fetchTestimonials();
-  }, []);
-
-  const fallbackTestimonials = [
+  const testimonials = [
     {
       _id: "1",
       message: "Adoptar un estilo de vida vegano ha sido la mejor decisión de mi vida. No solo me siento mejor físicamente, sino que también tengo la tranquilidad de saber que estoy contribuyendo a un mundo mejor.",
@@ -84,7 +63,7 @@ const Testimonials = () => {
       <div className="testimonials-slider">
         <button className="arrow left" onClick={prevTestimonial}>&#10094;</button>
 
-        <div className="testimonials-track" style={{ transform: `translateX(-${(currentIndex % (testimonials.length / 2)) * 33.33}%)` }}>
+        <div className="testimonials-track" style={{ transform: `translateX(-${(currentIndex % testimonials.length) * 33.33}%)` }}>
           {testimonials.map((testimonial, index) => (
             <div key={index} className={`testimonial-card ${index === currentIndex ? "active" : ""}`}>
               <img src={testimonial.image} alt={testimonial.name} />
