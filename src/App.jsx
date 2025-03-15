@@ -1,7 +1,7 @@
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import HeroSlider from "./components/HeroSlider";
-import { AuthProvider } from "./context/AuthContext"; // 🔥 Asegura el contexto
+import { AuthProvider } from "./context/AuthContext";
 import "./styles/style.css";
 
 function App() {

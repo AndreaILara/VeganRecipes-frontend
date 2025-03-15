@@ -27,10 +27,10 @@ const Navbar = () => {
             <span>Recetas ▼</span>
             {showDropdown && (
               <ul className="dropdown-menu">
-                <li><Link to="/recetas/desayunos">Desayunos</Link></li>
-                <li><Link to="/recetas/comidas">Comidas</Link></li>
-                <li><Link to="/recetas/meriendas">Meriendas</Link></li>
-                <li><Link to="/recetas/cenas">Cenas</Link></li>
+                <li><Link to="/recetas/categoria/desayunos">Desayunos</Link></li>
+                <li><Link to="/recetas/categoria/comidas">Comidas</Link></li>
+                <li><Link to="/recetas/categoria/meriendas">Meriendas</Link></li>
+                <li><Link to="/recetas/categoria/cenas">Cenas</Link></li>
               </ul>
             )}
           </li>
@@ -39,14 +39,14 @@ const Navbar = () => {
         {user ? (
           <div className="user-menu">
             <Link to="/perfil" className="user-profile">
-              <img src={user.avatar || "/default-avatar.png"} alt="Perfil" className="profile-pic-navbar" />
+              <img src={user.avatar || "/default-avatar.jpg"} alt="Perfil" className="profile-pic-navbar" />
             </Link>
             <Link to="/favoritos" className="btn-favorites">❤️</Link>
-            {user.role === "admin" && <Link to="/admin" className="btn-admin">➕ Añadir Receta</Link>}
+            {user.role === "admin" && <Link to="/admin" className="btn-admin">➕</Link>}
             <button onClick={logout} className="btn-logout">Cerrar sesión</button>
           </div>
         ) : (
-          <Link to="/login" className="btn-login">Únete</Link>
+          <Link to="/register" className="btn-login">Únete</Link>
         )}
       </div>
     </nav>

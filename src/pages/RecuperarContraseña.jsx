@@ -1,22 +1,31 @@
 import { useState } from "react";
-import { apiRequest } from "../utils/apiRequest";
+import { useNavigate } from "react-router-dom";
 import "../styles/RecuperarContraseña.css";
 
 const RecuperarContraseña = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await apiRequest({
-        endpoint: "users/forgot-password",
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/users/forgot-password`, {
         method: "POST",
-        body: { email },
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
       });
-      setMessage("✅ Revisa tu correo para restablecer tu contraseña.");
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "No se pudo enviar el correo.");
+
+      // Guardar el email en localStorage para la siguiente etapa
+      localStorage.setItem("resetEmail", email);
+      setMessage("✅ Código enviado a tu correo. Revisa tu bandeja.");
+
+      setTimeout(() => navigate("/verificacion"), 2000); // Redirigir a verificación
     } catch (error) {
-      setMessage("❌ Error al enviar solicitud.");
+      setMessage("❌ No se pudo enviar el correo.");
     }
   };
 
@@ -27,10 +36,8 @@ const RecuperarContraseña = () => {
         <form onSubmit={handleSubmit}>
           <label>Email</label>
           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-
-          <button type="submit" className="cta-button">Enviar</button>
+          <button type="submit" className="cta-button">Enviar Código</button>
         </form>
-
         {message && <p className="message">{message}</p>}
       </div>
     </div>

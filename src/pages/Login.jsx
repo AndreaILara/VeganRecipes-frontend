@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { apiRequest } from "../utils/apiRequest";
-import { AuthContext, AuthProvider } from "../context/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import "../styles/Login.css";
 
 const Login = () => {
@@ -10,6 +10,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
+  // ✅ Añadimos la función handleChange para actualizar el estado del formulario
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -25,11 +26,14 @@ const Login = () => {
         body: formData,
       });
 
+      if (!data || !data.token) {
+        throw new Error("No se recibió un token válido.");
+      }
+
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      login(data.user);
-      console.log("✅ Login exitoso:", data);
+      login(data.user, data.token);
       navigate("/perfil");
     } catch (error) {
       console.error("❌ Error en login:", error.message);
@@ -54,11 +58,11 @@ const Login = () => {
         </form>
 
         <p className="switch-auth">
-          ¿No tienes cuenta? <Link to="/registro">Regístrate aquí</Link>
+          ¿No tienes cuenta? <Link to="/register">Regístrate aquí</Link>
         </p>
 
         <p className="switch-auth">
-          <Link to="/recuperar">¿Olvidaste tu contraseña?</Link>
+          <Link to="/recuperar-contraseña">¿Olvidaste tu contraseña?</Link>
         </p>
       </div>
     </div>

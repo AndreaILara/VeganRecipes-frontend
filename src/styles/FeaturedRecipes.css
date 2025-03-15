@@ -1,85 +1,81 @@
 .featured-recipes {
   text-align: center;
-  padding: var(--spacing-lg) 0;
+  padding: var(--spacing-lg);
   background-color: var(--color-background);
-  overflow: hidden;
 }
 
-.featured-recipes h2 {
-  font-size: 2rem;
-  color: var(--color-dark);
+.carousel-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--color-primary);
   margin-bottom: var(--spacing-md);
 }
 
-/* Carrusel */
 .carousel {
-  width: 100%;
+  display: flex;
   overflow: hidden;
-  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .carousel-track {
   display: flex;
   gap: var(--spacing-md);
-  width: calc(250px * 20); /* Duplicamos las 10 recetas */
-  animation: scroll 30s linear infinite;
+  animation: scroll 15s linear infinite;
 }
 
-/* Tarjetas */
 .recipe-card {
   background: white;
-  padding: var(--spacing-sm);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 250px;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
-  transition: transform 0.3s ease-in-out;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  min-width: 250px;
 }
 
 .recipe-card:hover {
   transform: scale(1.05);
 }
 
-/* Imagen */
-.recipe-card img {
+.recipe-image {
   width: 100%;
-  height: 180px;
-  border-radius: var(--border-radius-sm);
+  height: 150px;
   object-fit: cover;
+  border-radius: var(--border-radius-sm);
 }
 
-/* Título */
-.recipe-card h3 {
-  color: var(--color-primary);
-  font-size: 1.2rem;
-  margin: var(--spacing-sm) 0;
-}
-
-/* Botón */
-.recipe-card button {
+.recipe-button {
   background-color: var(--color-primary);
   color: white;
-  border: none;
   padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
   border-radius: var(--border-radius-sm);
   cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.3s;
-  margin-top: auto;
+  font-size: 14px;
+  margin-top: var(--spacing-sm);
 }
 
-.recipe-card button:hover {
+.recipe-button:hover {
   background-color: var(--color-hover);
 }
 
 @keyframes scroll {
-  0% {
-    transform: translateX(0);
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* 🔄 Hace que rote */
+}
+
+@media (max-width: 768px) {
+  .carousel-track {
+    animation: none;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
   }
-  100% {
-    transform: translateX(-50%);
+
+  .recipe-card {
+    scroll-snap-align: center;
   }
 }

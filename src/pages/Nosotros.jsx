@@ -38,7 +38,7 @@ const Nosotros = () => {
             No importa si eres principiante o un vegano experimentado, aquí encontrarás apoyo, información y una comunidad que
             comparte tu interés por una vida más compasiva. ¡Forma parte de este movimiento!
           </p>
-          <a href="/register" className="cta-button">Únete Ahora</a>
+          <a href="/register" className="unete-button">Únete Ahora</a>
         </div>
       </section>
     </div>

@@ -1,14 +1,14 @@
-/* Estilo general de la página */
-.profile-page {
+/* Página de recuperación */
+.recuperar-page {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh;
   background-color: #f4f4f4;
 }
 
-/* Contenedor del perfil */
-.profile-container {
+/* Contenedor del formulario */
+.recuperar-container {
   background: white;
   padding: 30px;
   border-radius: 10px;
@@ -18,10 +18,17 @@
 }
 
 /* Título */
-.profile-title {
-  font-size: 24px;
+.recuperar-container h2 {
+  font-size: 22px;
   font-weight: bold;
   color: #333;
+  margin-bottom: 10px;
+}
+
+/* Texto de ayuda */
+.info-text {
+  font-size: 14px;
+  color: #666;
   margin-bottom: 15px;
 }
 
@@ -41,38 +48,6 @@
 .error {
   background: #f8d7da;
   color: #721c24;
-}
-
-/* Imagen de perfil */
-.profile-pic-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.profile-pic-large {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #8cc342;
-}
-
-/* Botón para cambiar imagen */
-.file-label {
-  display: inline-block;
-  margin-top: 10px;
-  background: #8cc342;
-  color: white;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.file-input {
-  display: none;
 }
 
 /* Estilos de los inputs */
@@ -96,8 +71,8 @@
   font-size: 14px;
 }
 
-/* Botón de actualizar */
-.btn-update {
+/* Botón de enviar */
+.cta-button {
   width: 100%;
   padding: 12px;
   background: #8cc342;
@@ -109,24 +84,22 @@
   transition: background 0.3s ease;
 }
 
-.btn-update:hover {
+.cta-button:hover {
   background: #6ea12e;
 }
 
-/* Botón de cerrar sesión */
-.btn-logout {
-  width: 100%;
-  padding: 12px;
-  background: red;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 10px;
-  transition: background 0.3s ease;
+/* Enlace a login */
+.switch-auth {
+  margin-top: 15px;
+  font-size: 14px;
 }
 
-.btn-logout:hover {
-  background: darkred;
+.switch-auth a {
+  color: #8cc342;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.switch-auth a:hover {
+  color: #6ea12e;
 }

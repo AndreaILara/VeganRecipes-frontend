@@ -1,0 +1,119 @@
+.edit-recipe-container {
+  max-width: 800px; /* Aumenta el tamaño */
+  margin: 60px auto;
+  padding: 40px; /* Más padding */
+  background: white;
+  border-radius: 12px; /* Bordes más redondeados */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd; /* Borde sutil */
+}
+
+.edit-recipe-title {
+  text-align: center;
+  font-size: 30px; /* 🔥 Más grande */
+  font-weight: bold;
+  color: var(--color-dark);
+  margin-bottom: 20px;
+}
+
+.edit-recipe-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.edit-recipe-label {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.edit-recipe-input,
+.edit-recipe-textarea,
+.edit-recipe-file {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--color-secondary);
+  border-radius: 8px;
+  font-size: 16px;
+  background: #f9f9f9; /* Fondo más claro */
+}
+
+.edit-recipe-textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.edit-recipe-preview {
+  width: 100%;
+  max-height: 350px;
+  object-fit: cover;
+  margin-top: 20px;
+  border-radius: 8px;
+  border: 2px solid #eee; /* Añade un borde a la imagen */
+}
+
+/* 🔵 Botón de actualizar */
+.edit-recipe-button {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background 0.3s ease;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.edit-recipe-button:hover {
+  background-color: var(--color-hover);
+}
+
+/* 🔴 Botón de eliminar receta */
+.delete-recipe-button {
+  background-color: #e74c3c;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background 0.3s ease;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.delete-recipe-button:hover {
+  background-color: #c0392b;
+}
+
+/* 🔹 Responsive */
+@media (max-width: 768px) {
+  .edit-recipe-container {
+    width: 95%;
+    padding: 30px;
+  }
+
+  .edit-recipe-button,
+  .delete-recipe-button {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .edit-recipe-title {
+    font-size: 26px;
+  }
+
+  .edit-recipe-label {
+    font-size: 18px;
+  }
+
+  .edit-recipe-button,
+  .delete-recipe-button {
+    font-size: 15px;
+    padding: 10px;
+  }
+}

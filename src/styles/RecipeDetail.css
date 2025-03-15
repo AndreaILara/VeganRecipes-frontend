@@ -1,0 +1,112 @@
+.recipe-detail-container {
+  display: flex;
+  justify-content: center;
+  padding: var(--spacing-xl);
+  background-color: var(--color-background);
+}
+
+.recipe-detail {
+  display: flex;
+  max-width: 1200px;
+  width: 100%;
+  gap: 4rem; /* 🔥 Aumenta el espacio entre imagen y texto */
+  align-items: center;
+}
+
+.recipe-detail-image {
+  width: 50%;
+  max-width: 600px;
+  height: auto;
+  object-fit: cover;
+}
+
+.recipe-detail-info {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: var(--spacing-md);
+}
+
+
+.recipe-title {
+  font-size: 36px; /* 🔥 Tamaño mejor equilibrado */
+  font-weight: 800;
+  color: var(--color-dark);
+  margin-bottom: var(--spacing-md);
+}
+
+.recipe-subtitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-top: var(--spacing-md);
+}
+
+.recipe-list, .recipe-steps {
+  padding-left: var(--spacing-md);
+}
+
+.recipe-list-item {
+  list-style-type: disc;
+}
+
+.recipe-step-item {
+  list-style-type: decimal;
+}
+
+/* 🔥 Botón más pequeño y mejor alineado */
+.recipe-edit-button {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 10px 20px; /* 🔥 Ajusta tamaño del botón */
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+  align-self: flex-start;
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.recipe-edit-button:hover {
+  background-color: var(--color-hover);
+}
+
+/* 🔹 Responsive */
+@media (max-width: 1024px) {
+  .recipe-detail {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .recipe-detail-image {
+    width: 90%;
+    max-width: 100%;
+  }
+
+  .recipe-detail-info {
+    width: 90%;
+  }
+
+  .recipe-edit-button {
+    align-self: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .recipe-title {
+    font-size: 28px;
+  }
+
+  .recipe-subtitle {
+    font-size: 18px;
+  }
+
+  .recipe-edit-button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}
