@@ -63,9 +63,9 @@ const AppRoutes = () => {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={!user ? <Login /> : <Navigate to="/perfil" />} />
-          <Route path="/register" element={!user ? <Register /> : <Navigate to="/perfil" />} />
-          <Route path="/recuperar-contraseña" element={<RecuperarContraseña />} /> {/* Ajusta esta ruta */}
+          <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
+          <Route path="/register" element={!user ? <Register /> : <Navigate to="/" />} />
+          <Route path="/recuperar-contraseña" element={<RecuperarContraseña />} />
           <Route path="/verificacion" element={<CodigoVerificacion />} />
           <Route path="/nueva-contraseña" element={<NuevaContraseña />} />
           <Route path="/perfil" element={user ? <Profile /> : <Navigate to="/login" />} />

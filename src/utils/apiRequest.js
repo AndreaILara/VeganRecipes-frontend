@@ -3,11 +3,11 @@ import { mainRoute } from "../data/mainRoutes";
 export const apiRequest = async ({ endpoint, id = "", method = "GET", body, isFormData = false }) => {
   const token = localStorage.getItem("token");
 
-  console.log(`🛠️ Token actual en localStorage:`, token); // Log para verificar
+  console.log(`🛠️ Token actual en localStorage:`, token); // ✅ Verifica si el token está presente
 
   const headers = {
     ...(isFormData
-      ? { Authorization: `Bearer ${token}` }
+      ? { Authorization: `Bearer ${token}` } // ✅ Si es FormData, se omite Content-Type
       : {
         "Content-Type": "application/json",
         ...(token && { Authorization: `Bearer ${token}` }),

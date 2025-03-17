@@ -31,7 +31,7 @@ const EditRecipe = () => {
     const file = e.target.files[0];
     if (file) {
       setNewImage(file);
-      setRecipe({ ...recipe, image: URL.createObjectURL(file) });
+      setRecipe({ ...recipe, image: file }); // Guardamos directamente el archivo en `recipe.image`
     }
   };
 
@@ -44,8 +44,10 @@ const EditRecipe = () => {
     formData.append("ingredients", recipe.ingredients);
     formData.append("steps", recipe.steps);
     formData.append("category", recipe.category);
-    if (recipe.image instanceof File) {
-      formData.append("image", recipe.image);
+
+    if (newImage) {
+      console.log("📸 Subiendo nueva imagen:", newImage); // 🔍 Verifica que la imagen existe
+      formData.append("image", newImage);
     }
 
     try {
@@ -59,6 +61,7 @@ const EditRecipe = () => {
       setMessage("✅ Receta actualizada correctamente.");
       setTimeout(() => navigate(`/receta/${id}`), 2000);
     } catch (error) {
+      console.error("❌ Error en la actualización:", error);
       setMessage("❌ No se pudo actualizar la receta.");
     }
   };
@@ -90,7 +93,9 @@ const EditRecipe = () => {
         <label className="edit-recipe-label">Imagen</label>
         <input type="file" accept="image/*" onChange={handleImageChange} className="edit-recipe-file" />
 
-        {recipe.image && <img src={recipe.image} alt="Previsualización" className="edit-recipe-preview" />}
+        {recipe.image && (
+          <img src={newImage ? URL.createObjectURL(newImage) : recipe.image} alt="Previsualización" className="edit-recipe-preview" />
+        )}
 
         <button type="submit" className="edit-recipe-button">Actualizar Receta</button>
         <button type="button" className="delete-recipe-button" onClick={handleDelete}>🗑️ Eliminar Receta</button>

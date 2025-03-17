@@ -23,6 +23,7 @@
   display: flex;
   gap: var(--spacing-md);
   animation: scroll 15s linear infinite;
+  align-items: stretch; /* 🔥 Asegura que todos los elementos se alineen en altura */
 }
 
 .recipe-card {
@@ -34,6 +35,10 @@
   cursor: pointer;
   transition: transform 0.3s ease;
   min-width: 250px;
+  height: 320px; /* 🔥 Establece una altura uniforme */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* 🔥 Mantiene todo alineado */
 }
 
 .recipe-card:hover {
@@ -42,7 +47,7 @@
 
 .recipe-image {
   width: 100%;
-  height: 150px;
+  height: 180px; /* 🔥 Tamaño fijo para todas las imágenes */
   object-fit: cover;
   border-radius: var(--border-radius-sm);
 }
@@ -55,7 +60,7 @@
   border-radius: var(--border-radius-sm);
   cursor: pointer;
   font-size: 14px;
-  margin-top: var(--spacing-sm);
+  margin-top: auto; /* 🔥 Hace que el botón quede alineado al final */
 }
 
 .recipe-button:hover {
