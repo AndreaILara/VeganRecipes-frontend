@@ -1,112 +1,282 @@
+/* 🔹 Contenedor principal */
 .recipe-detail-container {
   display: flex;
-  justify-content: center;
-  padding: var(--spacing-xl);
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-lg);
   background-color: var(--color-background);
 }
 
+/* 🔹 Contenedor de la receta (Imagen + Info) */
 .recipe-detail {
   display: flex;
-  max-width: 1200px;
+  flex-direction: row; /* 🔥 Imagen a la izquierda, texto a la derecha */
+  max-width: 900px;
   width: 100%;
-  gap: 4rem; /* 🔥 Aumenta el espacio entre imagen y texto */
-  align-items: center;
+  background: white;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  gap: var(--spacing-md);
 }
 
+/* 🔹 Imagen de la receta */
 .recipe-detail-image {
   width: 50%;
-  max-width: 600px;
+  max-width: 400px;
   height: auto;
   object-fit: cover;
+  border-radius: var(--border-radius-md);
 }
 
+/* 🔹 Información de la receta */
 .recipe-detail-info {
   width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-bottom: var(--spacing-md);
 }
 
-
+/* 🔹 Título */
 .recipe-title {
-  font-size: 36px; /* 🔥 Tamaño mejor equilibrado */
-  font-weight: 800;
+  font-size: 26px;
+  font-weight: bold;
   color: var(--color-dark);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
 }
 
+/* 🔹 Botón de favoritos */
+.favorite-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: var(--spacing-sm);
+}
+
+.favorite-icon {
+  width: 30px;
+  height: 30px;
+  transition: opacity 0.2s ease;
+}
+
+.favorite-button:hover .favorite-icon {
+  opacity: 0.7;
+}
+
+/* 🔹 Sección de ingredientes y pasos */
 .recipe-subtitle {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--color-primary);
   margin-top: var(--spacing-md);
 }
 
 .recipe-list, .recipe-steps {
-  padding-left: var(--spacing-md);
+  padding-left: var(--spacing-sm);
 }
 
 .recipe-list-item {
   list-style-type: disc;
+  font-size: 14px;
 }
 
 .recipe-step-item {
   list-style-type: decimal;
+  font-size: 14px;
 }
 
-/* 🔥 Botón más pequeño y mejor alineado */
+/* 🔹 Botón de edición (Solo Admin) */
 .recipe-edit-button {
   background-color: var(--color-primary);
   color: white;
-  padding: 10px 20px; /* 🔥 Ajusta tamaño del botón */
+  padding: 8px 16px;
   border: none;
   border-radius: var(--border-radius-sm);
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   transition: background 0.3s;
   align-self: flex-start;
   margin-top: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
 }
 
 .recipe-edit-button:hover {
   background-color: var(--color-hover);
 }
 
-/* 🔹 Responsive */
-@media (max-width: 1024px) {
+/* 🔹 Sección de comentarios */
+.comments-section {
+  width: 100%;
+  max-width: 900px;
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--color-secondary);
+}
+
+/* 🔹 Título de comentarios */
+.comments-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-sm);
+  text-align: left;
+}
+
+/* 🔹 Caja de entrada de comentario */
+.comment-input {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: var(--color-light);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-md);
+}
+
+.comment-input input {
+  flex: 1;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-secondary);
+  border-radius: var(--border-radius-sm);
+  font-size: 14px;
+}
+
+.comment-input button {
+  background-color: var(--color-primary);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.comment-input button:hover {
+  background-color: var(--color-hover);
+}
+
+/* 🔹 Lista de comentarios */
+.comments-list {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--spacing-sm);
+  max-height: 250px; /* 🔥 Altura máxima para que no ocupe demasiado */
+  overflow-y: auto; /* 🔥 Habilita scroll si hay demasiados comentarios */
+}
+
+/* 🔹 Estilos de cada comentario */
+.comment-item {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid var(--color-light);
+}
+
+.comment-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: var(--spacing-sm);
+}
+
+/* 🔹 Nombre del usuario */
+.comment-username {
+  font-weight: bold;
+  font-size: 14px;
+  color: var(--color-dark);
+  margin-right: var(--spacing-sm);
+}
+
+/* 🔹 Contenido del comentario */
+.comment-content {
+  font-size: 14px;
+  color: var(--color-dark);
+  flex: 1;
+}
+
+/* 🔹 Botones de acciones (eliminar, responder) */
+.comment-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-xs);
+}
+
+.comment-actions button {
+  background: none;
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--color-primary);
+  transition: color 0.2s ease;
+}
+
+.comment-actions button:hover {
+  color: var(--color-hover);
+}
+
+/* 🔹 Estilo especial para el botón de eliminar */
+.delete-button {
+  color: red;
+}
+
+.delete-button:hover {
+  color: darkred;
+}
+
+/* 🔹 Respuestas anidadas */
+.replies-list {
+  list-style: none;
+  padding-left: var(--spacing-md);
+  margin-top: var(--spacing-xs);
+  border-left: 2px solid var(--color-secondary);
+}
+
+.reply-item {
+  background: var(--color-light);
+  padding: var(--spacing-xs);
+  border-radius: var(--border-radius-sm);
+  margin-top: var(--spacing-xs);
+}
+
+/* 🔹 Responsive (Tablets y móviles) */
+@media (max-width: 768px) {
   .recipe-detail {
-    flex-direction: column;
+    flex-direction: column; /* 🔥 Apila la imagen y texto en pantallas pequeñas */
     align-items: center;
     text-align: center;
   }
 
   .recipe-detail-image {
-    width: 90%;
+    width: 100%;
     max-width: 100%;
   }
 
   .recipe-detail-info {
-    width: 90%;
+    width: 100%;
   }
 
   .recipe-edit-button {
     align-self: center;
   }
+
+  .comments-list {
+    max-height: 180px;
+  }
 }
 
 @media (max-width: 480px) {
   .recipe-title {
-    font-size: 28px;
+    font-size: 22px;
   }
 
   .recipe-subtitle {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .recipe-edit-button {
-    font-size: 14px;
-    padding: 8px 16px;
+    font-size: 12px;
+    padding: 6px 12px;
   }
 }

@@ -35,10 +35,14 @@
   cursor: pointer;
   transition: transform 0.3s ease;
   min-width: 250px;
-  height: 320px; /* 🔥 Establece una altura uniforme */
+  max-width: 250px; /* 🔥 Fija el ancho para todas las tarjetas */
+  min-height: 350px; /* 🔥 Define una altura mínima uniforme */
+  max-height: 350px; /* 🔥 Define una altura máxima uniforme */
   display: flex;
   flex-direction: column;
+  align-items: center; /* 🔥 Centra los elementos */
   justify-content: space-between; /* 🔥 Mantiene todo alineado */
+  flex-grow: 1; /* 🔥 Asegura que todas crezcan igual */
 }
 
 .recipe-card:hover {

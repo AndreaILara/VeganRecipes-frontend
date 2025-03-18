@@ -1,7 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/WhyVegan.css";
 
 const WhyVegan = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="why-vegan">
       <div className="container">
@@ -11,7 +14,7 @@ const WhyVegan = () => {
             Descubre los beneficios de una alimentación basada en plantas para
             tu salud, el medio ambiente y los animales.
           </p>
-          <button>Descubre más</button>
+          <button onClick={() => navigate("/vegan-info")}>Descubre más</button>
         </div>
         <div className="why-vegan-image">
           <img

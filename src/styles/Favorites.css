@@ -1,0 +1,133 @@
+.favorites-container {
+    padding: var(--spacing-lg);
+    max-width: 900px;
+    margin: auto;
+    text-align: center;
+  }
+  
+  .favorites-title {
+    color: var(--color-primary);
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  /* 🔹 Diseño en lista con espacio entre elementos */
+  .favorites-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  
+  /* 🔹 Tarjeta de receta con mejor distribución */
+  .favorite-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    justify-content: space-between; /* 🔥 Asegura que los botones no se superpongan */
+  }
+  
+  .favorite-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* 🔹 Imagen más grande y alineada a la izquierda */
+  .favorite-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: var(--border-radius-sm);
+    margin-right: var(--spacing-md);
+  }
+  
+  /* 🔹 Contenedor de la información de la receta */
+  .favorite-info {
+    flex: 1;
+    text-align: left;
+  }
+  
+  .favorite-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--color-dark);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .favorite-category {
+    font-size: 14px;
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+  
+  /* 🔹 Botones mejor alineados */
+  .favorite-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    align-items: flex-end; /* 🔥 Mantiene los botones alineados a la derecha */
+  }
+  
+  /* 🔹 Aumentamos el tamaño de los botones */
+  .favorite-remove,
+  .favorite-view {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: var(--border-radius-sm);
+    transition: background 0.2s ease;
+    width: 140px; /* 🔥 Tamaño uniforme */
+    text-align: center;
+  }
+  
+  .favorite-remove {
+    background: #d9534f;
+    color: white;
+  }
+  
+  .favorite-remove:hover {
+    background: darkred;
+  }
+  
+  .favorite-view {
+    background: var(--color-primary);
+    color: white;
+  }
+  
+  .favorite-view:hover {
+    background: var(--color-hover);
+  }
+  
+  /* 🔹 Ajustes responsivos */
+  @media (max-width: 768px) {
+    .favorite-card {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .favorite-image {
+      width: 100%;
+      height: 200px;
+      margin-bottom: var(--spacing-sm);
+    }
+  
+    /* 🔥 En móviles, los botones van debajo del título */
+    .favorite-actions {
+      flex-direction: row;
+      justify-content: center;
+      width: 100%;
+      margin-top: var(--spacing-sm);
+    }
+  
+    .favorite-remove,
+    .favorite-view {
+      width: 100%; /* 🔥 Ocupan todo el ancho disponible */
+    }
+  }
+  
