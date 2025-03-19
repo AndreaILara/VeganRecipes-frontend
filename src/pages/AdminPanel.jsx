@@ -10,8 +10,13 @@ const AdminPanel = () => {
     ingredients: "",
     steps: "",
     category: "Desayuno",
+    prepTime: "",
+    cookTime: "",
+    servings: "",
     image: null,
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const recipesPerPage = 10;
 
   useEffect(() => {
     fetchRecipes();
@@ -44,41 +49,54 @@ const AdminPanel = () => {
 
   const handleRecipeSubmit = async (e) => {
     e.preventDefault();
-  
+
     const formData = new FormData();
     formData.append("title", newRecipe.title);
     formData.append("ingredients", newRecipe.ingredients);
     formData.append("steps", newRecipe.steps);
     formData.append("category", newRecipe.category);
-    formData.append("image", newRecipe.image); // ⚠️ Asegúrate de que la imagen se está añadiendo
-  
+    formData.append("prepTime", newRecipe.prepTime);
+    formData.append("cookTime", newRecipe.cookTime);
+    formData.append("servings", newRecipe.servings);
+    formData.append("image", newRecipe.image);
+
     try {
       const response = await apiRequest({
         endpoint: "recipes",
         method: "POST",
         body: formData,
-        isFormData: true, // ⚠️ IMPORTANTE: Esto le dice a `apiRequest.js` que no establezca `Content-Type`
+        isFormData: true,
       });
-  
+
       if (response) {
         alert("✅ Receta añadida con éxito");
-        fetchRecipes(); // Recargar la lista de recetas después de añadir una
+        fetchRecipes();
       }
     } catch (error) {
       console.error("❌ Error al enviar receta:", error);
     }
   };
-  
+
+  // 🔹 Paginar recetas
+  const indexOfLastRecipe = currentPage * recipesPerPage;
+  const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
+  const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
 
   return (
     <div className="admin-panel">
       <h2>Panel de Administración</h2>
+
       <section className="add-recipe">
         <h3>Añadir Nueva Receta</h3>
         <form onSubmit={handleRecipeSubmit}>
           <input type="text" placeholder="Título" onChange={(e) => setNewRecipe({ ...newRecipe, title: e.target.value })} required />
           <textarea placeholder="Ingredientes" onChange={(e) => setNewRecipe({ ...newRecipe, ingredients: e.target.value })} required />
           <textarea placeholder="Pasos" onChange={(e) => setNewRecipe({ ...newRecipe, steps: e.target.value })} required />
+
+          <input type="number" placeholder="⏳ Tiempo de preparación (min)" onChange={(e) => setNewRecipe({ ...newRecipe, prepTime: e.target.value })} required />
+          <input type="number" placeholder="🔥 Tiempo de cocción (min)" onChange={(e) => setNewRecipe({ ...newRecipe, cookTime: e.target.value })} required />
+          <input type="number" placeholder="🍽️ Porciones" onChange={(e) => setNewRecipe({ ...newRecipe, servings: e.target.value })} required />
+
           <select onChange={(e) => setNewRecipe({ ...newRecipe, category: e.target.value })}>
             <option value="Desayuno">Desayuno</option>
             <option value="Comida">Comida</option>
@@ -105,13 +123,22 @@ const AdminPanel = () => {
       <section className="recipes-list">
         <h3>Recetas Publicadas</h3>
         <ul>
-          {recipes.map((recipe) => (
+          {currentRecipes.map((recipe) => (
             <li key={recipe._id}>
               {recipe.title}
               <button onClick={() => handleDeleteRecipe(recipe._id)}>Eliminar</button>
             </li>
           ))}
         </ul>
+
+        {/* Paginación */}
+        <div className="pagination">
+          {Array.from({ length: Math.ceil(recipes.length / recipesPerPage) }, (_, i) => (
+            <button key={i} onClick={() => setCurrentPage(i + 1)} className={currentPage === i + 1 ? "active" : ""}>
+              {i + 1}
+            </button>
+          ))}
+        </div>
       </section>
     </div>
   );

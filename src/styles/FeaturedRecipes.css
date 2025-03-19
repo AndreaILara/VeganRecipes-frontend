@@ -4,87 +4,126 @@
   background-color: var(--color-background);
 }
 
-.carousel-title {
-  font-size: 24px;
+/* ✅ Título del carrusel (EXCLUSIVO FeaturedRecipes) */
+.featured-recipes .carousel-title {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
   font-weight: bold;
   color: var(--color-primary);
   margin-bottom: var(--spacing-md);
 }
 
-.carousel {
-  display: flex;
+/* ✅ Contenedor del carrusel (ESPECÍFICO FeaturedRecipes) */
+.featured-recipes .carousel {
+  position: relative;
   overflow: hidden;
   width: 100%;
   max-width: 1200px;
   margin: auto;
 }
 
-.carousel-track {
+/* ✅ Pista del carrusel */
+.featured-recipes .carousel-track {
   display: flex;
   gap: var(--spacing-md);
-  animation: scroll 15s linear infinite;
-  align-items: stretch; /* 🔥 Asegura que todos los elementos se alineen en altura */
+  align-items: stretch;
+  animation: featured-scroll 20s linear infinite;
+  white-space: nowrap;
 }
 
-.recipe-card {
+/* ✅ Tarjetas de receta */
+.featured-recipes .recipe-card {
   background: white;
   padding: var(--spacing-md);
   border-radius: var(--border-radius-md);
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
   cursor: pointer;
-  transition: transform 0.3s ease;
-  min-width: 250px;
-  max-width: 250px; /* 🔥 Fija el ancho para todas las tarjetas */
-  min-height: 350px; /* 🔥 Define una altura mínima uniforme */
-  max-height: 350px; /* 🔥 Define una altura máxima uniforme */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  min-width: 220px;
+  max-width: 220px;
+  min-height: 320px;
+  max-height: 320px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* 🔥 Centra los elementos */
-  justify-content: space-between; /* 🔥 Mantiene todo alineado */
-  flex-grow: 1; /* 🔥 Asegura que todas crezcan igual */
+  align-items: center;
+  justify-content: space-between;
 }
 
-.recipe-card:hover {
+/* ✅ Efecto hover */
+.featured-recipes .recipe-card:hover {
   transform: scale(1.05);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
 }
 
-.recipe-image {
+/* ✅ Imagen de receta (TAMAÑO FIJO) */
+.featured-recipes .recipe-image {
   width: 100%;
-  height: 180px; /* 🔥 Tamaño fijo para todas las imágenes */
+  height: 160px;
   object-fit: cover;
   border-radius: var(--border-radius-sm);
 }
 
-.recipe-button {
-  background-color: var(--color-primary);
-  color: white;
-  padding: var(--spacing-sm) var(--spacing-md);
-  border: none;
-  border-radius: var(--border-radius-sm);
-  cursor: pointer;
-  font-size: 14px;
-  margin-top: auto; /* 🔥 Hace que el botón quede alineado al final */
+/* ✅ Título de la receta */
+.featured-recipes .recipe-title {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--color-dark);
+  margin-top: var(--spacing-sm);
+  text-align: center;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.recipe-button:hover {
-  background-color: var(--color-hover);
+/* ✅ Elimina los botones */
+.featured-recipes .recipe-card button {
+  display: none;
 }
 
-@keyframes scroll {
+/* ✅ Animación del carrusel */
+@keyframes featured-scroll {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); } /* 🔄 Hace que rote */
+  100% { transform: translateX(-50%); } 
 }
 
+/* 📱 Responsivo para móviles */
 @media (max-width: 768px) {
-  .carousel-track {
+  .featured-recipes .carousel-track {
     animation: none;
     flex-wrap: nowrap;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
+    gap: var(--spacing-sm);
   }
 
-  .recipe-card {
+  .featured-recipes .recipe-card {
     scroll-snap-align: center;
+    min-width: 180px;
+    max-width: 180px;
+    min-height: 280px;
+    max-height: 280px;
+  }
+
+  .featured-recipes .recipe-image {
+    height: 130px;
+  }
+
+  .featured-recipes .recipe-title {
+    font-size: 0.9rem;
+    min-height: 40px;
+  }
+
+  .featured-recipes .carousel::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* 📺 Responsivo para tablets */
+@media (max-width: 1024px) {
+  .featured-recipes .carousel-track {
+    animation: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
   }
 }

@@ -1,71 +1,161 @@
-/* Sección Hero */
+/* ✅ Estilos generales */
+.static-page {
+  font-family: "Poppins", sans-serif;
+  color: var(--color-dark);
+  line-height: 1.7;
+  background-color: var(--color-background);
+}
+
+/* ✅ Sección Hero con overlay */
 .hero-nosotros {
-  background: url("/hero-nosotros.jpg") no-repeat center center/cover;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/hero-nosotros.jpg") no-repeat center center/cover;
   text-align: center;
-  padding: 80px 20px;
+  padding: 100px 20px;
   color: white;
 }
 
 .hero-nosotros h1 {
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 5vw, 3rem);
   margin-bottom: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .hero-nosotros p {
-  font-size: 1.2rem;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  max-width: 600px;
+  margin: auto;
+  line-height: 1.6;
 }
 
-/* Secciones de contenido */
+/* ✅ Secciones de contenido (Fondo alterno para más fluidez) */
 .about-section {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 40px;
-  max-width: 1000px;
-  margin: 50px auto;
-  padding: 20px;
+  justify-content: center;
+  gap: 60px;
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 60px 40px;
+  border-radius: var(--border-radius-md);
 }
 
+.about-section:nth-child(odd) {
+  background: white;
+}
+
+.about-section:nth-child(even) {
+  background: var(--color-light);
+}
+
+/* Alterna la disposición en secciones */
 .about-section.reverse {
   flex-direction: row-reverse;
 }
 
+/* ✅ Texto de cada sección */
 .about-text {
-  max-width: 500px;
+  max-width: 550px;
 }
 
 .about-text h2 {
   color: var(--color-primary);
-  font-size: 2rem;
-  margin-bottom: 10px;
+  font-size: clamp(1.8rem, 4vw, 2.3rem);
+  margin-bottom: 15px;
 }
 
 .about-text p {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
   color: var(--color-dark);
+  line-height: 1.7;
 }
 
+/* ✅ Imágenes con efecto de desplazamiento */
 .about-image {
-  width: 45%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 40%;
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.4s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-/* Botón CTA */
+.about-image:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ✅ Botón CTA con animación */
 .unete-button {
   display: inline-block;
-  margin-top: 20px;
-  padding: 12px 20px;
+  margin-top: 25px;
+  padding: 14px 24px;
   background: var(--color-primary);
   color: white;
   text-decoration: none;
-  border-radius: var(--border-radius-sm);
+  border-radius: var(--border-radius-md);
   font-weight: bold;
-  transition: background 0.3s ease;
+  font-size: 1.1rem;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .unete-button:hover {
   background: var(--color-hover);
-  color: white; /* Asegura que el texto se mantenga legible */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añade un efecto de sombra */
-  transform: scale(1.05); /* Hace que el botón crezca un poco */
+  transform: translateY(-3px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 🔹 📱 RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+  .about-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 50px 20px;
+    gap: 40px;
+  }
+
+  .about-section.reverse {
+    flex-direction: column;
+  }
+
+  .about-text {
+    max-width: 90%;
+  }
+
+  .about-image {
+    width: 80%;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-nosotros {
+    padding: 80px 15px;
+  }
+
+  .hero-nosotros h1 {
+    font-size: 2rem;
+  }
+
+  .hero-nosotros p {
+    font-size: 1rem;
+  }
+
+  .about-section {
+    padding: 40px 15px;
+  }
+
+  .about-text h2 {
+    font-size: 1.7rem;
+  }
+
+  .about-text p {
+    font-size: 1rem;
+  }
+
+  .unete-button {
+    font-size: 1rem;
+    padding: 12px 20px;
+  }
+
+  .about-image {
+    width: 90%;
+  }
 }

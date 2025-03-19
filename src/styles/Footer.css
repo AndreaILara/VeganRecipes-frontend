@@ -2,30 +2,34 @@
   background: var(--color-dark);
   color: var(--color-light);
   padding: var(--spacing-lg) 0;
+  text-align: center;
+}
+
+/* ✅ Contenedor flexible y responsivo */
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
   text-align: left;
 }
 
-.footer-container {
-  display: flex;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
-  flex-wrap: wrap;
-}
-
+/* ✅ Estilo de cada sección */
 .footer-section {
-  width: 30%;
+  min-width: 200px;
 }
 
 .footer-section h3 {
   color: var(--color-primary);
-  font-size: 1.3rem;
+  font-size: clamp(1.3rem, 2vw, 1.5rem);
   margin-bottom: var(--spacing-sm);
   font-weight: 600;
 }
 
 .footer-section p {
-  font-size: 1rem;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
   color: var(--color-light);
 }
 
@@ -35,28 +39,29 @@
 }
 
 .footer-section ul li {
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
 }
 
 .footer-section ul li a {
   color: var(--color-light);
   text-decoration: none;
   font-size: 1rem;
+  transition: color 0.3s ease-in-out;
 }
 
 .footer-section ul li a:hover {
   color: var(--color-secondary);
 }
 
-/* Línea divisoria */
+/* ✅ Línea divisoria */
 .footer-divider {
   width: 90%;
   max-width: 1200px;
-  margin: 20px auto;
-  border-top: 1px solid var(--color-light);
+  margin: var(--spacing-md) auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* Redes Sociales */
+/* ✅ Redes Sociales */
 .social-container {
   display: flex;
   justify-content: center;
@@ -66,28 +71,30 @@
 
 .social-container a {
   color: var(--color-light);
-  font-size: 1.5rem;
-  transition: color 0.3s ease;
+  font-size: 1.8rem;
+  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 .social-container a:hover {
   color: var(--color-primary);
+  transform: scale(1.1);
 }
 
-/* Barra inferior */
+/* ✅ Barra inferior */
 .footer-bottom {
   text-align: center;
   margin-top: var(--spacing-lg);
   padding-top: var(--spacing-md);
   font-size: 0.9rem;
+  opacity: 0.8;
 }
 
-/* Modal de Cookies */
+/* ✅ Modal de Cookies */
 .cookie-banner {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background: var(--color-dark);
+  background: rgba(0, 0, 0, 0.9);
   color: var(--color-light);
   text-align: center;
   padding: var(--spacing-md);
@@ -95,14 +102,17 @@
   justify-content: center;
   align-items: center;
   gap: var(--spacing-md);
+  z-index: 999;
 }
 
+/* ✅ Botones del modal */
 .cookie-banner button {
   padding: var(--spacing-sm) var(--spacing-md);
   border: none;
   cursor: pointer;
   font-size: 1rem;
   border-radius: var(--border-radius-sm);
+  transition: transform 0.2s ease-in-out;
 }
 
 .cookie-banner button:first-of-type {
@@ -113,4 +123,25 @@
 .cookie-banner button:last-of-type {
   background: var(--color-secondary);
   color: white;
+}
+
+.cookie-banner button:hover {
+  transform: scale(1.05);
+}
+
+/* 📱 Responsivo */
+@media (max-width: 768px) {
+  .footer-container {
+    text-align: center;
+    grid-template-columns: 1fr;
+  }
+
+  .footer-section {
+    width: 100%;
+  }
+
+  .social-container {
+    flex-direction: row;
+    justify-content: center;
+  }
 }

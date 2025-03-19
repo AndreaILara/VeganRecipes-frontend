@@ -1,26 +1,28 @@
-/* Estilos generales del navbar */
+/* ✅ Estilos generales */
 .navbar {
   background: white;
-  padding: 10px 20px;
+  padding: 15px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   position: relative;
+  width: 100%;
 }
 
-/* Contenedor del navbar */
+/* ✅ Contenedor del navbar */
 .navbar-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width:100%;
-  max-width: 1800px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-/* Ajuste del logo */
+/* ✅ Ajuste del logo */
 .navbar-logo img {
-  height: 150px;
+  height: 120px;
   transition: transform 0.3s ease;
 }
 
@@ -28,7 +30,7 @@
   transform: scale(1.1);
 }
 
-/* Menú principal */
+/* ✅ Menú principal */
 .navbar-menu {
   display: flex;
   gap: 30px;
@@ -50,84 +52,99 @@
   color: var(--color-hover);
 }
 
-/* Estilos para el menú desplegable */
+/* ✅ Estilos del menú hamburguesa */
+.hamburger {
+  display: none;
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-dark);
+}
+
+/* ✅ Menú desplegable */
 .dropdown {
   position: relative;
 }
 
+.dropdown span {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* 🔹 Menú desplegable estilizado */
 .dropdown-menu {
   position: absolute;
   top: 100%;
   left: 0;
-  background: rgba(255, 255, 255, 0.9); /* Semitransparente */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.95); /* Más opaco para mejor visibilidad */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  padding: 10px 0;
-  width: 180px;
+  align-items: center; /* 🔥 Centra el contenido horizontalmente */
+  justify-content: center; /* 🔥 Asegura alineación vertical */
+  padding: 12px 0;
+  width: 220px;
   list-style: none;
-  border-radius: 5px;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  border-radius: 8px;
+  z-index: 999; /* 🔥 Asegura que esté por encima de todo */
 }
 
-/* Mostrar el menú desplegable cuando el usuario pasa el ratón */
-.dropdown:hover .dropdown-menu {
+/* 🔹 Asegurar que el menú siempre sea visible cuando está activo */
+.dropdown-menu.show {
   opacity: 1;
   visibility: visible;
 }
 
-/* Ajuste de los ítems del menú desplegable */
+/* 🔹 Estiliza los elementos del menú */
 .dropdown-menu li {
-  padding: 10px;
-  text-align: left;
-}
-
-.dropdown-menu li a {
-  text-decoration: none;
-  color: var(--color-dark);
-  display: block;
+  width: 100%;
+  text-align: center; /* 🔥 Centra el texto */
+  padding: 10px 0;
+  font-weight: 600;
   transition: background 0.3s ease;
 }
 
-.dropdown-menu li a:hover {
-  background: var(--color-primary);
-  color: white;
-  padding-left: 10px;
+.dropdown-menu li:hover {
+  background: var(--color-secondary);
+  color: var(--color-dark);
+  border-radius: 4px;
 }
-.btn-login {
-    background: var(--color-primary);
-    color: white;
-    padding: var(--spacing-sm) var(--spacing-md);
-    text-decoration: none;
-    border-radius: var(--border-radius-sm);
-    font-weight: 600;
-    transition: background 0.3s ease, color 0.3s ease;
-  }
-  
-.btn-login:hover {
-  background: var(--color-hover);
-    color: white; /* Asegurar que el texto sea visible */
-}
-/* Estilos para la sección de usuario */
+
+
+/* ✅ Estilos de usuario */
 .user-menu {
   display: flex;
   align-items: center;
   gap: 15px;
-  
 }
 
-/* Ajuste de la imagen de perfil en el navbar */
+/* Imagen de perfil */
 .profile-pic-navbar {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--color-primary);
 }
-
-/* Botón de favoritos */
+.btn-login{
+  background: var(--color-primary);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-weight: bold;
+}
+.btn-login:hover {
+  background: var(--color-hover);
+  color: white;
+}
+/* Botón favoritos */
 .btn-favorites {
   font-size: 20px;
   text-decoration: none;
@@ -139,16 +156,13 @@
   color: red;
 }
 
-/* Botón de añadir receta */
+/* Botón admin */
 .btn-admin {
   font-size: 16px;
   background: none;
   border: none;
   cursor: pointer;
   color: var(--color-dark);
-  display: flex;
-  align-items: center;
-  gap: 5px;
   font-weight: bold;
 }
 
@@ -156,7 +170,7 @@
   color: var(--color-hover);
 }
 
-/* Botón de cerrar sesión */
+/* Botón logout */
 .btn-logout {
   background: var(--color-primary);
   color: white;
@@ -172,17 +186,42 @@
   background: red;
 }
 
-/* Estilos responsivos */
+/* ✅ Estilos para móviles */
 @media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 10px;
+  }
+
   .navbar-container {
     flex-direction: column;
     align-items: center;
   }
 
+  .navbar-logo img {
+    height: 100px;
+  }
+
+  /* ✅ Menú hamburguesa visible */
+  .hamburger {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+  }
+
+  /* ✅ Ocultamos el menú por defecto */
   .navbar-menu {
     flex-direction: column;
     text-align: center;
-    gap: 10px;
+    gap: 15px;
+    display: none;
+    width: 100%;
+  }
+
+  /* ✅ Mostramos el menú al hacer clic */
+  .navbar-menu.active {
+    display: flex;
   }
 
   .user-menu {
@@ -190,8 +229,13 @@
     gap: 10px;
   }
 
+  /* ✅ Ajuste del dropdown en móviles */
   .dropdown-menu {
-    width: 100%;
-    text-align: center;
+    position: static;
+    background: white;
+  }
+
+  .dropdown span {
+    display: block;
   }
 }

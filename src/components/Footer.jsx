@@ -20,7 +20,7 @@ const Footer = () => {
   return (
     <>
       <footer className="footer">
-        <div className="container footer-container">
+        <div className="footer-container">
           {/* Sección de Información */}
           <div className="footer-section">
             <h3>Tu Rincón Vegano</h3>
@@ -32,7 +32,7 @@ const Footer = () => {
             <h3>Conecta</h3>
             <ul>
               <li><Link to="/nosotros">Nosotros</Link></li>
-              <li><Link to="/contacto">Contáctenos</Link></li>
+              <li><Link to="/contacto">Contáctanos</Link></li>
             </ul>
           </div>
 
@@ -53,11 +53,16 @@ const Footer = () => {
 
         {/* Redes Sociales */}
         <div className="social-container">
-          <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-facebook-f"></i></a>
-          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-instagram"></i></a>
-          <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-youtube"></i></a>
+          <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+            <i className="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+            <i className="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">
+            <i className="fab fa-youtube"></i>
+          </a>
         </div>
-
 
         {/* Derechos reservados */}
         <div className="footer-bottom">

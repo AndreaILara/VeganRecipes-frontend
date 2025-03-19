@@ -18,7 +18,6 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
@@ -31,17 +30,32 @@ const Register = () => {
         body: formData,
       });
 
+      if (!newUser || newUser.error) {
+        throw new Error(newUser.message || "Error desconocido en el registro.");
+      }
+
       setMessage("✅ Registro exitoso. Redirigiendo...");
       setTimeout(() => {
         navigate("/login");
       }, 2000);
     } catch (error) {
-      setMessage("❌ Error al registrarse. Inténtalo de nuevo.");
-      console.error("Error en el registro:", error);
+      console.error("❌ Error en el registro:", error);
+
+      // 🔥 Capturar el mensaje de error enviado desde el backend
+      if (error.message.includes("El email ya está en uso")) {
+        setMessage("❌ El email ya está registrado. Intenta con otro.");
+      } else if (error.message.includes("El nombre de usuario ya está en uso")) {
+        setMessage("❌ El nombre de usuario ya existe. Prueba con otro.");
+      } else if (error.message.includes("contraseña")) {
+        setMessage("❌ La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un símbolo especial.");
+      } else {
+        setMessage("❌ Error al registrarse. Inténtalo de nuevo.");
+      }
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="register-page">

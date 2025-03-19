@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { apiRequest } from "../utils/apiRequest";
 import "../styles/FeaturedRecipes.css";
 
@@ -41,7 +41,7 @@ const FeaturedRecipes = () => {
               onClick={() => navigate(`/receta/${recipe._id}`)}
             >
               <img src={recipe.image} alt={recipe.title} className="recipe-image" />
-              <h3>{recipe.title}</h3>
+              <h3 className="recipe-title">{recipe.title}</h3>
               <button className="recipe-button">Ver Receta</button>
             </div>
           ))}

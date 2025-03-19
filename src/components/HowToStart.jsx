@@ -15,9 +15,9 @@ const HowToStart = () => {
       <h2>¿Cómo empezar con el veganismo?</h2>
       <ul className="steps-list">
         {steps.map((step) => (
-          <li key={step.id}>
+          <li key={step.id} className="step-item">
             <FaCheckCircle className="step-icon" />
-            {step.text}
+            <span>{step.text}</span>
           </li>
         ))}
       </ul>

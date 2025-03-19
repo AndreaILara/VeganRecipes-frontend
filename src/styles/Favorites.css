@@ -1,133 +1,167 @@
+/* 🔹 Contenedor principal */
 .favorites-container {
-    padding: var(--spacing-lg);
-    max-width: 900px;
-    margin: auto;
-    text-align: center;
-  }
-  
-  .favorites-title {
-    color: var(--color-primary);
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: var(--spacing-lg);
-  }
-  
-  /* 🔹 Diseño en lista con espacio entre elementos */
+  text-align: center;
+  padding: var(--spacing-lg);
+}
+
+/* 🔹 Lista de recetas favoritas */
+.favorites-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 🔥 Siempre 3 columnas por fila */
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+  justify-items: center;
+}
+
+/* 🔹 Tarjeta de receta */
+.favorite-card {
+  background: white;
+  border-radius: var(--border-radius-md);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: var(--spacing-md);
+  transition: transform 0.2s ease-in-out;
+  width: 100%;
+  max-width: 350px; /* 🔥 Tamaño uniforme */
+  height: 320px; /* 🔥 Altura fija */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* 🔥 Asegura que todo el contenido quede alineado */
+  align-items: center;
+}
+
+.favorite-card:hover {
+  transform: scale(1.02);
+}
+
+/* 🔹 Imagen de receta */
+.favorite-image {
+  width: 100%;
+  height: 150px; /* 🔥 Altura fija para mantener consistencia */
+  object-fit: cover;
+  border-radius: var(--border-radius-md);
+}
+
+/* 🔹 Información de la receta */
+.favorite-info {
+  text-align: center;
+  flex-grow: 1; /* 🔥 Hace que la info crezca y mantenga alineado */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.favorite-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.favorite-category {
+  font-size: 14px;
+  color: var(--color-dark);
+  opacity: 0.7;
+}
+
+/* 🔹 Botones */
+.favorite-actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* 🔥 Asegura que los botones no se salgan */
+}
+
+.favorite-view,
+.favorite-remove {
+  padding: var(--spacing-sm);
+  width: 48%; /* 🔥 Ambos botones del mismo tamaño */
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: background 0.3s ease;
+  text-align: center;
+}
+
+.favorite-view {
+  background: var(--color-primary);
+  color: white;
+}
+
+.favorite-view:hover {
+  background: var(--color-hover);
+}
+
+.favorite-remove {
+  background: red;
+  color: white;
+}
+
+.favorite-remove:hover {
+  background: darkred;
+}
+
+/* 🔹 Paginación */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+.pagination-button {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  background: var(--color-primary);
+  color: white;
+  transition: background 0.3s ease;
+}
+
+.pagination-button:hover {
+  background: var(--color-hover);
+}
+
+.pagination-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  font-weight: bold;
+}
+
+/* 🔹 Responsivo */
+@media (max-width: 1024px) {
   .favorites-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
+    grid-template-columns: repeat(2, 1fr); /* 🔥 2 columnas en tablets */
   }
-  
-  /* 🔹 Tarjeta de receta con mejor distribución */
+
   .favorite-card {
-    display: flex;
-    align-items: center;
-    background: white;
-    border-radius: var(--border-radius-md);
-    padding: var(--spacing-md);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
-    justify-content: space-between; /* 🔥 Asegura que los botones no se superpongan */
+    max-width: 100%;
   }
-  
-  .favorite-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  .favorites-list {
+    grid-template-columns: 1fr; /* 🔥 1 columna en móviles */
   }
-  
-  /* 🔹 Imagen más grande y alineada a la izquierda */
+
+  .favorite-card {
+    height: auto;
+    max-width: 100%;
+  }
+
   .favorite-image {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: var(--border-radius-sm);
-    margin-right: var(--spacing-md);
+    height: 160px;
   }
-  
-  /* 🔹 Contenedor de la información de la receta */
-  .favorite-info {
-    flex: 1;
-    text-align: left;
-  }
-  
-  .favorite-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: var(--color-dark);
-    margin-bottom: var(--spacing-sm);
-  }
-  
-  .favorite-category {
-    font-size: 14px;
-    color: var(--color-primary);
-    font-weight: 600;
-  }
-  
-  /* 🔹 Botones mejor alineados */
+
   .favorite-actions {
-    display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
-    align-items: flex-end; /* 🔥 Mantiene los botones alineados a la derecha */
   }
-  
-  /* 🔹 Aumentamos el tamaño de los botones */
-  .favorite-remove,
-  .favorite-view {
-    padding: var(--spacing-sm) var(--spacing-lg);
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    border-radius: var(--border-radius-sm);
-    transition: background 0.2s ease;
-    width: 140px; /* 🔥 Tamaño uniforme */
-    text-align: center;
-  }
-  
+
+  .favorite-view,
   .favorite-remove {
-    background: #d9534f;
-    color: white;
+    width: 100%;
   }
-  
-  .favorite-remove:hover {
-    background: darkred;
-  }
-  
-  .favorite-view {
-    background: var(--color-primary);
-    color: white;
-  }
-  
-  .favorite-view:hover {
-    background: var(--color-hover);
-  }
-  
-  /* 🔹 Ajustes responsivos */
-  @media (max-width: 768px) {
-    .favorite-card {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-  
-    .favorite-image {
-      width: 100%;
-      height: 200px;
-      margin-bottom: var(--spacing-sm);
-    }
-  
-    /* 🔥 En móviles, los botones van debajo del título */
-    .favorite-actions {
-      flex-direction: row;
-      justify-content: center;
-      width: 100%;
-      margin-top: var(--spacing-sm);
-    }
-  
-    .favorite-remove,
-    .favorite-view {
-      width: 100%; /* 🔥 Ocupan todo el ancho disponible */
-    }
-  }
-  
+}

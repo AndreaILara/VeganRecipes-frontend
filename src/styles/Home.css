@@ -1,7 +1,7 @@
 .section {
   text-align: center;
   padding: var(--spacing-lg);
-  background: var(--color-light);
+  background-color: var(--color-background);
   margin: var(--spacing-md) 0;
 }
 

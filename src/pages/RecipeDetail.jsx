@@ -3,8 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { apiRequest } from "../utils/apiRequest";
 import "../styles/RecipeDetail.css";
-import heartOutline from "../../public/heart-outline.png";
-import heartFilled from "../../public/heart-fill.png";
+import heartRed from "../../public/heart-red.png";
+import heartBig from "../../public/heart-big.png";
 
 const RecipeDetail = () => {
   const { id } = useParams();
@@ -92,7 +92,14 @@ const RecipeDetail = () => {
       });
 
       if (res?._id) {
-        setComments([...comments, res]); // Agrega el nuevo comentario
+        setComments([...comments, {
+          _id: res._id,
+          content: newComment,
+          createdBy: {
+            username: user.username,
+            avatar: user.avatar || "/default-avatar.png",
+          }
+        }]);
         setNewComment("");
         setReplyingTo(null);
       } else {
@@ -102,6 +109,7 @@ const RecipeDetail = () => {
       console.error("❌ Error al publicar comentario:", error);
     }
   };
+
 
   const handleDeleteComment = async (commentId) => {
     if (!user) return;
@@ -127,17 +135,32 @@ const RecipeDetail = () => {
 
   return (
     <div className="recipe-detail-container">
-      <div className="recipe-detail">
+      <div className="recipe-header">
         <img src={recipe.image} alt={recipe.title} className="recipe-detail-image" />
-        <div className="recipe-detail-info">
-          <h1 className="recipe-title">{recipe.title}</h1>
+        <div className="recipe-overlay"></div>
+        <h1 className="recipe-title-overlay">{recipe.title}</h1>
 
-          {/* Botón de favorito */}
-          <button className="favorite-button" onClick={handleToggleFavorite}>
-            <img src={isFavorite ? heartFilled : heartOutline} alt="Favorito" className="favorite-icon" />
-          </button>
+        <button className={`favorite-button ${isFavorite ? "active" : ""}`} onClick={handleToggleFavorite}>
+          <img src={isFavorite ? heartBig : heartRed} alt="Favorito" className="favorite-icon" />
+        </button>
+      </div>
 
-          <h2 className="recipe-subtitle">Ingredientes:</h2>
+      {/* 🔹 Barra de información de la receta */}
+      <div className="recipe-info-bar">
+        <span>⏳ Tiempo de preparación: {recipe.prepTime || "10m"}</span>
+        <span>🔥 Cocción: {recipe.cookTime || "20m"}</span>
+        <span>🍽️ Porciones: {recipe.servings || "2"}</span>
+      </div>
+      {user?.role === "admin" && (
+        <button className="edit-recipe-button" onClick={() => navigate(`/editar-receta/${id}`)}>
+          ✏️ Editar Receta
+        </button>
+      )}
+
+      {/* 🔹 Ingredientes y Pasos */}
+      <div className="recipe-content">
+        <div className="recipe-ingredients">
+          <h2 className="recipe-subtitle">Ingredientes</h2>
           <ul className="recipe-list">
             {recipe.ingredients
               ? recipe.ingredients.split(",").map((ing, index) => (
@@ -145,38 +168,39 @@ const RecipeDetail = () => {
               ))
               : <li>No hay ingredientes disponibles.</li>}
           </ul>
+        </div>
 
-          <h2 className="recipe-subtitle">Pasos:</h2>
-          <ol className="recipe-steps">
+        <div className="recipe-steps">
+          <h2 className="recipe-subtitle">Preparación</h2>
+          <ol>
             {recipe.steps
               ? recipe.steps.split(".").map((step, index) =>
                 step.trim() && <li key={index} className="recipe-step-item">{step.trim()}.</li>
               )
               : <li>No hay pasos disponibles.</li>}
           </ol>
-
-          {user?.role === "admin" && (
-            <button onClick={() => navigate(`/editar-receta/${id}`)} className="recipe-edit-button">
-              ✏️ Editar Receta
-            </button>
-          )}
         </div>
       </div>
+      <button className="back-button" onClick={() => {
+        const formattedCategory = recipe.category.toLowerCase().replace(/\s+/g, "-") + "s";
+        navigate(`/recetas/categoria/${formattedCategory}`);
+      }}>
+        ← Volver a {recipe.category}s
+      </button>
 
-      {/* Sección de comentarios */}
       <div className="comments-section">
         <h2 className="comments-title">Comentarios</h2>
 
         {user && (
           <div className="comment-input">
-            {replyingTo && <p>Respondiendo a un comentario...</p>}
+            <img src={user.avatar || "/default-avatar.jpg"} alt="Avatar" className="comment-avatar" />
             <input
               type="text"
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               placeholder="Escribe un comentario..."
             />
-            <button onClick={handleAddComment}>Comentar</button>
+            <button onClick={handleAddComment} className="comment-button">Comentar</button>
           </div>
         )}
 
@@ -186,33 +210,17 @@ const RecipeDetail = () => {
           <ul className="comments-list">
             {comments.map((comment) => (
               <li key={comment._id} className="comment-item">
-                <p><strong>{comment.createdBy.username}:</strong> {comment.content}</p>
-                
-                <div className="comment-actions">
-                  {user && (
-                    <button onClick={() => setReplyingTo(comment._id)} className="reply-button">
-                      Responder
-                    </button>
-                  )}
+                <img src={comment.createdBy.avatar || "/default-avatar.png"} alt="Avatar" className="comment-avatar" />
+                <div className="comment-content">
+                  <span className="comment-username">{comment.createdBy.username}</span>
+                  <p>{comment.content}</p>
                   {user && (user._id === comment.createdBy._id || user.role === "admin") && (
-                    <button onClick={() => handleDeleteComment(comment._id)} className="delete-button">
-                      🗑️ Eliminar
-                    </button>
+                    <span className="delete-comment" onClick={() => handleDeleteComment(comment._id)}>Eliminar</span>
                   )}
                 </div>
-
-                {/* Mostrar respuestas */}
-                {comment.replies && comment.replies.length > 0 && (
-                  <ul className="replies-list">
-                    {comment.replies.map((reply) => (
-                      <li key={reply._id} className="reply-item">
-                        <p><strong>{reply.createdBy.username}:</strong> {reply.content}</p>
-                      </li>
-                    ))}
-                  </ul>
-                )}
               </li>
             ))}
+
           </ul>
         )}
       </div>

@@ -1,28 +1,37 @@
+section .hero-slider{
+  border-radius: 0%;
+}
 .hero-slider {
-  background: url("/hero.jpg") no-repeat center center/cover;
-  height: 60vh;
+  background: url("/hero.jpg") no-repeat center center;
+  background-size: cover; /* Asegura que la imagen no tenga bordes redondeados */
+  width: 100%;
+  min-height: 60vh; /* Altura mínima para que se adapte */
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   color: white;
+  padding: 2rem;
 }
 
 .hero-content {
   background: rgba(0, 0, 0, 0.6);
   padding: var(--spacing-md);
   border-radius: var(--border-radius-md);
+  max-width: 80%;
+  width: 600px;
 }
 
 .hero-content h1 {
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 5vw, 2.5rem); /* Tamaño dinámico */
   margin-bottom: var(--spacing-sm);
 }
 
 .hero-content p {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 3vw, 1.2rem);
   margin-bottom: var(--spacing-md);
 }
+
 .btn-explore {
   background: var(--color-primary);
   color: white;
@@ -31,9 +40,37 @@
   border-radius: var(--border-radius-sm);
   font-weight: 600;
   transition: background 0.3s ease, color 0.3s ease;
+  display: inline-block;
 }
 
 .btn-explore:hover {
   background: var(--color-hover);
-  color: white; /* Asegurar que el texto sea visible */
+  color: white;
+}
+
+/* ✅ Responsivo para móviles */
+@media (max-width: 768px) {
+  .hero-slider {
+    min-height: 50vh; /* Reduce la altura en pantallas pequeñas */
+    padding: 1rem;
+  }
+
+  .hero-content {
+    max-width: 90%;
+    width: 100%;
+    padding: var(--spacing-sm);
+  }
+
+  .hero-content h1 {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+
+  .hero-content p {
+    font-size: clamp(0.9rem, 4vw, 1rem);
+  }
+
+  .btn-explore {
+    width: 100%;
+    text-align: center;
+  }
 }

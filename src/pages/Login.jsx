@@ -10,7 +10,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
-  // ✅ Añadimos la función handleChange para actualizar el estado del formulario
+  // ✅ Manejar cambios en los inputs
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -36,8 +36,16 @@ const Login = () => {
       login(data.user, data.token);
       navigate("/perfil");
     } catch (error) {
-      console.error("❌ Error en login:", error.message);
-      setError(error.message);
+      console.error("❌ Error en login:", error);
+
+      // Manejo específico de errores
+      if (error.message.includes("Credenciales inválidas")) {
+        setError("❌ Correo o contraseña incorrectos.");
+      } else if (error.message.includes("Usuario no encontrado")) {
+        setError("❌ El correo no está registrado.");
+      } else {
+        setError("❌ Error al iniciar sesión. Inténtalo de nuevo.");
+      }
     }
   };
 

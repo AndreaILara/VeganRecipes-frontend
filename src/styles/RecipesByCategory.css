@@ -1,57 +1,124 @@
+/* 🔹 Contenedor principal */
 .recipes-category {
   text-align: center;
-  padding: 40px 20px;
+  padding: var(--spacing-lg) var(--spacing-md);
+  background-color: var(--color-background);
 }
 
+/* 🔹 Título de la categoría */
 .category-title {
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 20px;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: var(--spacing-lg);
   color: var(--color-dark);
 }
 
+/* 🔹 Grid de recetas */
 .recipes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr); /* 🔥 3 columnas en escritorio */
+  gap: var(--spacing-md);
   justify-content: center;
+  padding: var(--spacing-lg);
 }
 
+/* 🔹 Tarjeta de receta */
 .recipe-card {
   background: white;
-  border-radius: 10px;
+  border-radius: var(--border-radius-md);
   overflow: hidden;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
   text-align: center;
-  transition: transform 0.3s;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 420px; /* 🔥 Tarjetas más grandes */
+  height: auto;
+  margin: 0 auto;
+  cursor: pointer;
 }
 
 .recipe-card:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-.recipe-card img {
+/* 🔹 Imagen de la receta */
+.recipe-image {
   width: 100%;
-  height: 150px;
+  height: 260px;
   object-fit: cover;
 }
 
-.recipe-card h2 {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 10px 0;
+/* 🔹 Título de la receta */
+.recipe-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-dark);
+  padding: var(--spacing-md);
+  text-align: center;
+  line-height: 1.4;
+  white-space: normal; /* 🔥 Permite que el texto pase a la siguiente línea */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  min-height: 50px; /* 🔥 Evita que los títulos sean demasiado pequeños */
 }
 
-.btn-view {
-  display: inline-block;
-  margin: 10px;
-  padding: 8px 15px;
+/* 🔹 Paginación */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-lg);
+  gap: var(--spacing-sm);
+}
+
+.pagination-btn {
   background: var(--color-primary);
   color: white;
-  text-decoration: none;
-  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
 }
 
-.btn-view:hover {
+.pagination-btn:hover {
   background: var(--color-hover);
+  transform: scale(1.1);
+}
+
+.pagination-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-btn.active {
+  background: var(--color-dark);
+}
+
+/* 📱 Responsivo */
+
+/* 🔹 Tablets */
+@media (max-width: 1024px) {
+  .recipes-grid {
+    grid-template-columns: repeat(2, 1fr); /* 🔥 2 columnas */
+  }
+}
+
+/* 🔹 Móviles grandes */
+@media (max-width: 768px) {
+  .recipes-grid {
+    grid-template-columns: repeat(1, 1fr); /* 🔥 1 columna */
+  }
+
+  .recipe-card {
+    max-width: 90%;
+    height: auto;
+  }
+
+  .recipe-image {
+    height: 240px;
+  }
 }

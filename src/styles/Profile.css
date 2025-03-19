@@ -1,36 +1,38 @@
-/* Estilo general de la página */
+/* 🔹 Estilo general de la página */
 .profile-page {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f4f4f4;
+  background-color: var(--color-background);
+  padding: var(--spacing-md);
 }
 
-/* Contenedor del perfil */
+/* 🔹 Contenedor del perfil */
 .profile-container {
   background: white;
-  padding: 30px;
-  border-radius: 10px;
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-md);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 400px;
+  width: 100%;
+  max-width: 450px;
   text-align: center;
 }
 
-/* Título */
+/* 🔹 Título */
 .profile-title {
   font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 15px;
+  font-weight: 700;
+  color: var(--color-dark);
+  margin-bottom: var(--spacing-md);
 }
 
-/* Mensajes */
+/* 🔹 Mensajes de éxito/error */
 .message {
-  padding: 10px;
-  border-radius: 5px;
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
   font-size: 14px;
-  margin-bottom: 10px;
+  margin-bottom: var(--spacing-sm);
 }
 
 .success {
@@ -40,15 +42,15 @@
 
 .error {
   background: #f8d7da;
-  color: #721c24;
+  color: #c0392b;
 }
 
-/* Imagen de perfil */
+/* 🔹 Imagen de perfil */
 .profile-pic-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: var(--spacing-md);
 }
 
 .profile-pic-large {
@@ -56,77 +58,105 @@
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #8cc342;
+  border: 3px solid var(--color-primary);
 }
 
-/* Botón para cambiar imagen */
+/* 🔹 Botón para cambiar imagen */
 .file-label {
   display: inline-block;
-  margin-top: 10px;
-  background: #8cc342;
+  margin-top: var(--spacing-sm);
+  background: var(--color-primary);
   color: white;
-  padding: 8px 12px;
-  border-radius: 5px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-sm);
   cursor: pointer;
   font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.file-label:hover {
+  background: var(--color-hover);
 }
 
 .file-input {
   display: none;
 }
 
-/* Estilos de los inputs */
+/* 🔹 Estilos de los inputs */
 .input-group {
-  margin-bottom: 15px;
+  margin-bottom: var(--spacing-md);
   text-align: left;
 }
 
 .input-group label {
   display: block;
   font-size: 14px;
-  color: #555;
-  margin-bottom: 5px;
+  color: var(--color-dark);
+  margin-bottom: var(--spacing-sm);
 }
 
 .input-group input {
   width: 100%;
-  padding: 10px;
+  padding: var(--spacing-sm);
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: var(--border-radius-sm);
   font-size: 14px;
 }
 
-/* Botón de actualizar */
+/* 🔹 Botón de actualizar */
 .btn-update {
   width: 100%;
-  padding: 12px;
-  background: #8cc342;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-primary);
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: var(--border-radius-sm);
   cursor: pointer;
   font-size: 16px;
   transition: background 0.3s ease;
 }
 
 .btn-update:hover {
-  background: #6ea12e;
+  background: var(--color-hover);
 }
 
-/* Botón de cerrar sesión */
+/* 🔹 Botón de cerrar sesión */
 .btn-logout {
   width: 100%;
-  padding: 12px;
+  padding: var(--spacing-sm) var(--spacing-md);
   background: red;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: var(--border-radius-sm);
   cursor: pointer;
   font-size: 16px;
-  margin-top: 10px;
+  margin-top: var(--spacing-sm);
   transition: background 0.3s ease;
 }
 
 .btn-logout:hover {
-  background: darkred;
+  background: #c0392b;
+}
+
+/* 📱 **RESPONSIVE DESIGN PARA MÓVILES** */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: var(--spacing-md);
+    max-width: 90%;
+  }
+
+  .profile-pic-large {
+    width: 100px;
+    height: 100px;
+  }
+
+  .btn-update,
+  .btn-logout {
+    font-size: 14px;
+    padding: var(--spacing-sm);
+  }
+
+  .input-group input {
+    font-size: 14px;
+  }
 }

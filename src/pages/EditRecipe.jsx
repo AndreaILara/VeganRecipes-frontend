@@ -6,7 +6,16 @@ import "../styles/EditRecipe.css";
 const EditRecipe = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [recipe, setRecipe] = useState({ title: "", ingredients: "", steps: "", category: "", image: "" });
+  const [recipe, setRecipe] = useState({
+    title: "",
+    ingredients: "",
+    steps: "",
+    category: "",
+    prepTime: "",
+    cookTime: "",
+    servings: "",
+    image: "",
+  });
   const [message, setMessage] = useState("");
   const [newImage, setNewImage] = useState(null);
 
@@ -31,7 +40,7 @@ const EditRecipe = () => {
     const file = e.target.files[0];
     if (file) {
       setNewImage(file);
-      setRecipe({ ...recipe, image: file }); // Guardamos directamente el archivo en `recipe.image`
+      setRecipe({ ...recipe, image: file });
     }
   };
 
@@ -44,14 +53,18 @@ const EditRecipe = () => {
     formData.append("ingredients", recipe.ingredients);
     formData.append("steps", recipe.steps);
     formData.append("category", recipe.category);
+    formData.append("prepTime", recipe.prepTime);
+    formData.append("cookTime", recipe.cookTime);
+    formData.append("servings", recipe.servings);
 
+    // 🔹 Solo añadir imagen si el usuario selecciona una nueva
     if (newImage) {
-      console.log("📸 Subiendo nueva imagen:", newImage); // 🔍 Verifica que la imagen existe
+      console.log("📸 Subiendo nueva imagen:", newImage);
       formData.append("image", newImage);
     }
 
     try {
-      await apiRequest({
+      const updatedRecipe = await apiRequest({
         endpoint: `recipes/${id}`,
         method: "PUT",
         body: formData,
@@ -59,12 +72,19 @@ const EditRecipe = () => {
       });
 
       setMessage("✅ Receta actualizada correctamente.");
+
+      // 🔹 Actualizar la imagen en el estado
+      if (updatedRecipe.image) {
+        setRecipe((prev) => ({ ...prev, image: updatedRecipe.image }));
+      }
+
       setTimeout(() => navigate(`/receta/${id}`), 2000);
     } catch (error) {
       console.error("❌ Error en la actualización:", error);
       setMessage("❌ No se pudo actualizar la receta.");
     }
   };
+
 
   const handleDelete = async () => {
     try {
@@ -89,6 +109,25 @@ const EditRecipe = () => {
 
         <label className="edit-recipe-label">Pasos</label>
         <textarea name="steps" value={recipe.steps} onChange={handleChange} className="edit-recipe-textarea" required />
+
+        <label className="edit-recipe-label">Categoría</label>
+        <select name="category" value={recipe.category} onChange={handleChange} className="edit-recipe-select" required>
+          <option value="">Selecciona una categoría</option>
+          <option value="Desayuno">Desayuno</option>
+          <option value="Comida">Comida</option>
+          <option value="Merienda">Merienda</option>
+          <option value="Cena">Cena</option>
+        </select>
+
+        {/* 🔹 NUEVOS CAMPOS */}
+        <label className="edit-recipe-label">Tiempo de preparación</label>
+        <input type="text" name="prepTime" value={recipe.prepTime} onChange={handleChange} className="edit-recipe-input" placeholder="Ej: 10m" required />
+
+        <label className="edit-recipe-label">Tiempo de cocción</label>
+        <input type="text" name="cookTime" value={recipe.cookTime} onChange={handleChange} className="edit-recipe-input" placeholder="Ej: 20m" required />
+
+        <label className="edit-recipe-label">Porciones</label>
+        <input type="text" name="servings" value={recipe.servings} onChange={handleChange} className="edit-recipe-input" placeholder="Ej: 2" required />
 
         <label className="edit-recipe-label">Imagen</label>
         <input type="file" accept="image/*" onChange={handleImageChange} className="edit-recipe-file" />

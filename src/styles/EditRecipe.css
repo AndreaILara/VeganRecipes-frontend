@@ -73,7 +73,7 @@
 
 /* 🔴 Botón de eliminar receta */
 .delete-recipe-button {
-  background-color: #e74c3c;
+  background-color: red;
   color: white;
   padding: 12px;
   border: none;
@@ -86,7 +86,7 @@
 }
 
 .delete-recipe-button:hover {
-  background-color: #c0392b;
+  background-color: #c0352b;
 }
 
 /* 🔹 Responsive */

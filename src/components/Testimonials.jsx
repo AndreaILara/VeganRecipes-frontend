@@ -1,9 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "../styles/Testimonials.css";
 
 const Testimonials = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
   const testimonials = [
     {
       _id: "1",
@@ -35,19 +33,22 @@ const Testimonials = () => {
     },
     {
       _id: "5",
-      message: "Cada día me siento más comprometida con la causa vegana. Creo que es la mejor forma de cuidar de mi salud y del planeta. ¡Juntos podemos hacer la diferencia!",
+      message: "Cada día me sorprende más la cantidad de opciones veganas que existen. Ahora puedo disfrutar de mis platillos favoritos sin sacrificar sabor ni textura.",
       name: "María L.",
       image: "/animal5.jpg",
-      role: "Activista por los Animales",
+      role: "Amante de la Cocina",
     },
     {
       _id: "6",
-      message: "Estoy muy agradecida por todo el apoyo que he recibido en este grupo. Gracias a ustedes, he podido superar los obstáculos y seguir adelante con mi decisión de ser vegana.",
-      name: "Juan C.",
+      message: "Gracias a este sitio web, he descubierto un mundo de posibilidades en la cocina vegana. Me encanta experimentar con ingredientes nuevos y compartir mis creaciones con mi familia.",
+      name: "Pedro S.",
       image: "/animal6.jpg",
-      role: "Amante de los Animales",
-    },
+      role: "Padre de Familia",
+    }
   ];
+
+  const [currentIndex, setCurrentIndex] = useState(1);
+  const touchStartX = useRef(null);
 
   const nextTestimonial = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
@@ -57,21 +58,54 @@ const Testimonials = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length);
   };
 
+  // Detecta inicio del gesto táctil
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  // Detecta final del gesto táctil y decide si mover izquierda o derecha
+  const handleTouchEnd = (e) => {
+    if (!touchStartX.current) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - touchEndX;
+
+    if (diff > 50) nextTestimonial(); // Deslizar a la izquierda (siguiente)
+    else if (diff < -50) prevTestimonial(); // Deslizar a la derecha (anterior)
+
+    touchStartX.current = null;
+  };
+
   return (
     <section className="testimonials">
       <h2>Lo que dicen nuestros usuarios</h2>
-      <div className="testimonials-slider">
+      <div
+        className="testimonials-slider"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         <button className="arrow left" onClick={prevTestimonial}>&#10094;</button>
 
-        <div className="testimonials-track" style={{ transform: `translateX(-${(currentIndex % testimonials.length) * 33.33}%)` }}>
-          {testimonials.map((testimonial, index) => (
-            <div key={index} className={`testimonial-card ${index === currentIndex ? "active" : ""}`}>
-              <img src={testimonial.image} alt={testimonial.name} />
-              <h3>{testimonial.name}</h3>
-              <p className="testimonial-role">{testimonial.role}</p>
-              <p>"{testimonial.message}"</p>
-            </div>
-          ))}
+        <div className="testimonials-track">
+          {testimonials.map((testimonial, index) => {
+            let position = "inactive";
+
+            if (index === currentIndex) {
+              position = "active";
+            } else if (index === (currentIndex - 1 + testimonials.length) % testimonials.length) {
+              position = "left";
+            } else if (index === (currentIndex + 1) % testimonials.length) {
+              position = "right";
+            }
+
+            return (
+              <div key={index} className={`testimonial-card ${position}`}>
+                <img src={testimonial.image} alt={testimonial.name} />
+                <h3>{testimonial.name}</h3>
+                <p className="testimonial-role">{testimonial.role}</p>
+                <p>"{testimonial.message}"</p>
+              </div>
+            );
+          })}
         </div>
 
         <button className="arrow right" onClick={nextTestimonial}>&#10095;</button>
