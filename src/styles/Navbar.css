@@ -10,7 +10,6 @@
   width: 100%;
 }
 
-/* ✅ Contenedor del navbar */
 .navbar-container {
   display: flex;
   align-items: center;
@@ -20,21 +19,21 @@
   margin: 0 auto;
 }
 
-/* ✅ Ajuste del logo */
+/* ✅ Logo */
 .navbar-logo img {
   height: 120px;
   transition: transform 0.3s ease;
 }
-
 .navbar-logo img:hover {
   transform: scale(1.1);
 }
 
-/* ✅ Menú principal */
+/* ✅ Menú */
 .navbar-menu {
   display: flex;
   gap: 30px;
   list-style: none;
+  align-items: center;
 }
 
 .navbar-menu li {
@@ -47,82 +46,49 @@
   color: var(--color-dark);
   transition: color 0.3s ease;
 }
-
 .navbar-menu a:hover {
   color: var(--color-hover);
 }
 
-/* ✅ Estilos del menú hamburguesa */
-.hamburger {
-  display: none;
-  font-size: 28px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--color-dark);
-}
-
-/* ✅ Menú desplegable */
+/* ✅ Dropdown */
 .dropdown {
   position: relative;
 }
-
 .dropdown span {
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 100%;
 }
 
-/* 🔹 Menú desplegable estilizado */
+/* Submenú */
 .dropdown-menu {
   position: absolute;
   top: 100%;
   left: 0;
-  background: rgba(255, 255, 255, 0.95); /* Más opaco para mejor visibilidad */
+  background: rgba(255, 255, 255, 0.95);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  align-items: center; /* 🔥 Centra el contenido horizontalmente */
-  justify-content: center; /* 🔥 Asegura alineación vertical */
   padding: 12px 0;
   width: 220px;
   list-style: none;
   border-radius: 8px;
-  z-index: 999; /* 🔥 Asegura que esté por encima de todo */
+  z-index: 999;
 }
 
-/* 🔹 Asegurar que el menú siempre sea visible cuando está activo */
-.dropdown-menu.show {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* 🔹 Estiliza los elementos del menú */
 .dropdown-menu li {
-  width: 100%;
-  text-align: center; /* 🔥 Centra el texto */
+  text-align: center;
   padding: 10px 0;
   font-weight: 600;
   transition: background 0.3s ease;
 }
-
 .dropdown-menu li:hover {
   background: var(--color-secondary);
   color: var(--color-dark);
   border-radius: 4px;
 }
 
-
-/* ✅ Estilos de usuario */
-.user-menu {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-/* Imagen de perfil */
+/* ✅ Imagen de perfil */
 .profile-pic-navbar {
   width: 40px;
   height: 40px;
@@ -130,47 +96,23 @@
   object-fit: cover;
   border: 2px solid var(--color-primary);
 }
-.btn-login{
-  background: var(--color-primary);
-  color: white;
+
+/* ✅ Botón Únete */
+.navbar-menu li a[href="/register"] {
+  background-color: var(--color-primary);
+  color:white;
   padding: 8px 12px;
   border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s ease;
   font-weight: bold;
+  transition: all 0.3s ease;
 }
-.btn-login:hover {
+.navbar-menu li a[href="/register"]:hover {
   background: var(--color-hover);
   color: white;
-}
-/* Botón favoritos */
-.btn-favorites {
-  font-size: 20px;
-  text-decoration: none;
-  color: var(--color-primary);
-  transition: color 0.3s ease;
+  border-color: var(--color-hover);
 }
 
-.btn-favorites:hover {
-  color: red;
-}
-
-/* Botón admin */
-.btn-admin {
-  font-size: 16px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--color-dark);
-  font-weight: bold;
-}
-
-.btn-admin:hover {
-  color: var(--color-hover);
-}
-
-/* Botón logout */
+/* ✅ Botón logout */
 .btn-logout {
   background: var(--color-primary);
   color: white;
@@ -181,12 +123,45 @@
   transition: background 0.3s ease;
   font-weight: bold;
 }
-
 .btn-logout:hover {
   background: red;
 }
 
-/* ✅ Estilos para móviles */
+/* ✅ Botón favoritos */
+.btn-favorites {
+  font-size: 20px;
+  text-decoration: none;
+  color: var(--color-primary);
+  transition: color 0.3s ease;
+}
+.btn-favorites:hover {
+  color: red;
+}
+
+/* ✅ Botón admin */
+.btn-admin {
+  font-size: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-dark);
+  font-weight: bold;
+}
+.btn-admin:hover {
+  color: var(--color-hover);
+}
+
+/* ✅ Hamburguesa */
+.hamburger {
+  display: none;
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-dark);
+}
+
+/* ✅ Responsive */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
@@ -202,7 +177,6 @@
     height: 100px;
   }
 
-  /* ✅ Menú hamburguesa visible */
   .hamburger {
     display: block;
     position: absolute;
@@ -210,32 +184,36 @@
     top: 20px;
   }
 
-  /* ✅ Ocultamos el menú por defecto */
   .navbar-menu {
     flex-direction: column;
-    text-align: center;
+    align-items: center;
     gap: 15px;
     display: none;
     width: 100%;
+    padding-top: 20px;
   }
 
-  /* ✅ Mostramos el menú al hacer clic */
   .navbar-menu.active {
     display: flex;
+  }
+
+  .dropdown-menu {
+    position: static;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .dropdown-menu li:hover {
+    background: var(--color-secondary);
+  }
+
+  .dropdown span {
+    width: 100%;
+    justify-content: center;
   }
 
   .user-menu {
     flex-direction: column;
     gap: 10px;
-  }
-
-  /* ✅ Ajuste del dropdown en móviles */
-  .dropdown-menu {
-    position: static;
-    background: white;
-  }
-
-  .dropdown span {
-    display: block;
   }
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { apiRequest } from "../utils/apiRequest";
+import Loader from "../components/Loader"; // 👈 Asegúrate de tener este componente
 import "../styles/Recipes.css";
 
 const Recipes = () => {
@@ -11,11 +12,18 @@ const Recipes = () => {
 
   useEffect(() => {
     const fetchRecipes = async () => {
+      setLoading(true);
+      setError("");
+
       try {
         const formattedCategory = category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
         const response = await apiRequest({ endpoint: `recipes/category/${formattedCategory}`, method: "GET" });
 
-        setRecipes(response);
+        if (!response || response.length === 0) {
+          setError("No se encontraron recetas en esta categoría.");
+        } else {
+          setRecipes(response);
+        }
       } catch (err) {
         setError("No se encontraron recetas en esta categoría.");
       } finally {
@@ -29,7 +37,14 @@ const Recipes = () => {
   return (
     <div className="recipes-page container">
       <h1>{category.charAt(0).toUpperCase() + category.slice(1)}</h1>
-      {loading ? <p>Cargando...</p> : error ? <p>{error}</p> : (
+
+      {loading ? (
+        <div className="fullpage-loader">
+          <Loader />
+        </div>
+      ) : error ? (
+        <p className="error-message">{error}</p>
+      ) : (
         <div className="recipe-grid">
           {recipes.map((recipe) => (
             <div key={recipe._id} className="recipe-card">

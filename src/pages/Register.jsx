@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { apiRequest } from "../utils/apiRequest";
+import Loader from "../components/Loader";
 import "../styles/Register.css";
 
 const Register = () => {
@@ -10,12 +11,49 @@ const Register = () => {
     password: "",
   });
   const [message, setMessage] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [passwordHelp, setPasswordHelp] = useState("");
   const navigate = useNavigate();
 
-  // Manejar cambios en los inputs
+  // Validar requisitos de la contraseña mientras escribe
+  useEffect(() => {
+    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.]).{8,}$/;
+    if (formData.password && !regex.test(formData.password)) {
+      setPasswordHelp("La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un símbolo.");
+    } else {
+      setPasswordHelp("");
+    }
+  }, [formData.password]);
+
+  // Comprobar si el email ya existe (en tiempo real)
+  const checkEmailAvailability = async (email) => {
+    if (!email) return;
+    try {
+      const res = await apiRequest({
+        endpoint: "users/check-email",
+        method: "POST",
+        body: { email },
+      });
+
+      if (res.exists) {
+        setEmailError("❌ Este correo ya está registrado.");
+      } else {
+        setEmailError("");
+      }
+    } catch (error) {
+      console.error("Error al verificar email:", error);
+    }
+  };
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    if (name === "email") {
+      checkEmailAvailability(value);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -39,15 +77,12 @@ const Register = () => {
         navigate("/login");
       }, 2000);
     } catch (error) {
-      console.error("❌ Error en el registro:", error);
-
-      // 🔥 Capturar el mensaje de error enviado desde el backend
       if (error.message.includes("El email ya está en uso")) {
-        setMessage("❌ El email ya está registrado. Intenta con otro.");
+        setMessage("❌ El email ya está registrado.");
       } else if (error.message.includes("El nombre de usuario ya está en uso")) {
-        setMessage("❌ El nombre de usuario ya existe. Prueba con otro.");
+        setMessage("❌ El nombre de usuario ya existe.");
       } else if (error.message.includes("contraseña")) {
-        setMessage("❌ La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un símbolo especial.");
+        setMessage("❌ La contraseña no cumple con los requisitos.");
       } else {
         setMessage("❌ Error al registrarse. Inténtalo de nuevo.");
       }
@@ -56,6 +91,13 @@ const Register = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="fullpage-loader">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="register-page">
@@ -66,21 +108,54 @@ const Register = () => {
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label>Nombre de usuario</label>
-            <input type="text" name="username" value={formData.username} onChange={handleChange} required />
+            <input
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
           </div>
 
           <div className="input-group">
             <label>Email</label>
-            <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+            {emailError && <p className="input-error">{emailError}</p>}
           </div>
 
           <div className="input-group">
             <label>Contraseña</label>
-            <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+            <div className="password-wrapper">
+              <input
+                type={passwordVisible ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <button
+                type="button"
+                className="toggle-password"
+                onClick={() => setPasswordVisible((prev) => !prev)}
+              >
+                {passwordVisible ? "🙈" : "👁️"}
+              </button>
+            </div>
+            {passwordHelp && <p className="input-help">{passwordHelp}</p>}
           </div>
 
-          <button type="submit" className="btn-register" disabled={loading}>
-            {loading ? "Registrando..." : "Registrarse"}
+          <button
+            type="submit"
+            className="btn-register"
+            disabled={loading || emailError !== ""}
+          >
+            Registrarse
           </button>
         </form>
 

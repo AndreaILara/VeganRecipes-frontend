@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { apiRequest } from "../utils/apiRequest";
+import { AuthContext } from "../context/AuthContext";
+import Loader from "../components/Loader";
 import "../styles/AdminPanel.css";
 
 const AdminPanel = () => {
+  const { user } = useContext(AuthContext);
   const [recipes, setRecipes] = useState([]);
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [newRecipe, setNewRecipe] = useState({
     title: "",
     ingredients: "",
@@ -19,9 +23,16 @@ const AdminPanel = () => {
   const recipesPerPage = 10;
 
   useEffect(() => {
-    fetchRecipes();
-    fetchUsers();
-  }, []);
+    if (!user || user.role !== "admin") return;
+
+    const fetchData = async () => {
+      setLoading(true);
+      await Promise.all([fetchRecipes(), fetchUsers()]);
+      setLoading(false);
+    };
+
+    fetchData();
+  }, [user]);
 
   const fetchRecipes = async () => {
     const data = await apiRequest({ endpoint: "recipes" });
@@ -49,18 +60,13 @@ const AdminPanel = () => {
 
   const handleRecipeSubmit = async (e) => {
     e.preventDefault();
-
     const formData = new FormData();
-    formData.append("title", newRecipe.title);
-    formData.append("ingredients", newRecipe.ingredients);
-    formData.append("steps", newRecipe.steps);
-    formData.append("category", newRecipe.category);
-    formData.append("prepTime", newRecipe.prepTime);
-    formData.append("cookTime", newRecipe.cookTime);
-    formData.append("servings", newRecipe.servings);
-    formData.append("image", newRecipe.image);
+    Object.entries(newRecipe).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
 
     try {
+      setLoading(true);
       const response = await apiRequest({
         endpoint: "recipes",
         method: "POST",
@@ -70,17 +76,40 @@ const AdminPanel = () => {
 
       if (response) {
         alert("✅ Receta añadida con éxito");
+        setNewRecipe({
+          title: "",
+          ingredients: "",
+          steps: "",
+          category: "Desayuno",
+          prepTime: "",
+          cookTime: "",
+          servings: "",
+          image: null,
+        });
         fetchRecipes();
       }
     } catch (error) {
       console.error("❌ Error al enviar receta:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // 🔹 Paginar recetas
   const indexOfLastRecipe = currentPage * recipesPerPage;
   const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
   const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
+
+  if (!user || user.role !== "admin") {
+    return <p className="error-message">⛔ Acceso denegado. Sólo los administradores pueden acceder a este panel.</p>;
+  }
+
+  if (loading) {
+    return (
+      <div className="fullpage-loader">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="admin-panel">
@@ -89,15 +118,13 @@ const AdminPanel = () => {
       <section className="add-recipe">
         <h3>Añadir Nueva Receta</h3>
         <form onSubmit={handleRecipeSubmit}>
-          <input type="text" placeholder="Título" onChange={(e) => setNewRecipe({ ...newRecipe, title: e.target.value })} required />
-          <textarea placeholder="Ingredientes" onChange={(e) => setNewRecipe({ ...newRecipe, ingredients: e.target.value })} required />
-          <textarea placeholder="Pasos" onChange={(e) => setNewRecipe({ ...newRecipe, steps: e.target.value })} required />
-
-          <input type="number" placeholder="⏳ Tiempo de preparación (min)" onChange={(e) => setNewRecipe({ ...newRecipe, prepTime: e.target.value })} required />
-          <input type="number" placeholder="🔥 Tiempo de cocción (min)" onChange={(e) => setNewRecipe({ ...newRecipe, cookTime: e.target.value })} required />
-          <input type="number" placeholder="🍽️ Porciones" onChange={(e) => setNewRecipe({ ...newRecipe, servings: e.target.value })} required />
-
-          <select onChange={(e) => setNewRecipe({ ...newRecipe, category: e.target.value })}>
+          <input type="text" placeholder="Título" value={newRecipe.title} onChange={(e) => setNewRecipe({ ...newRecipe, title: e.target.value })} required />
+          <textarea placeholder="Ingredientes" value={newRecipe.ingredients} onChange={(e) => setNewRecipe({ ...newRecipe, ingredients: e.target.value })} required />
+          <textarea placeholder="Pasos" value={newRecipe.steps} onChange={(e) => setNewRecipe({ ...newRecipe, steps: e.target.value })} required />
+          <input type="number" placeholder="⏳ Tiempo de preparación (min)" value={newRecipe.prepTime} onChange={(e) => setNewRecipe({ ...newRecipe, prepTime: e.target.value })} required />
+          <input type="number" placeholder="🔥 Tiempo de cocción (min)" value={newRecipe.cookTime} onChange={(e) => setNewRecipe({ ...newRecipe, cookTime: e.target.value })} required />
+          <input type="number" placeholder="🍽️ Porciones" value={newRecipe.servings} onChange={(e) => setNewRecipe({ ...newRecipe, servings: e.target.value })} required />
+          <select value={newRecipe.category} onChange={(e) => setNewRecipe({ ...newRecipe, category: e.target.value })}>
             <option value="Desayuno">Desayuno</option>
             <option value="Comida">Comida</option>
             <option value="Merienda">Merienda</option>
@@ -131,7 +158,6 @@ const AdminPanel = () => {
           ))}
         </ul>
 
-        {/* Paginación */}
         <div className="pagination">
           {Array.from({ length: Math.ceil(recipes.length / recipesPerPage) }, (_, i) => (
             <button key={i} onClick={() => setCurrentPage(i + 1)} className={currentPage === i + 1 ? "active" : ""}>

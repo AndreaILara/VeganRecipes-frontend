@@ -137,6 +137,20 @@
 .btn-logout:hover {
   background: #c0392b;
 }
+.btn-delete-account {
+  background-color: #e74c3c;
+  color: white;
+  margin-top: 1rem;
+  padding: 10px 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.btn-delete-account:hover {
+  background-color: #c0392b;
+}
+
 
 /* 📱 **RESPONSIVE DESIGN PARA MÓVILES** */
 @media (max-width: 768px) {

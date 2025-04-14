@@ -17,14 +17,17 @@ export const AuthProvider = ({ children }) => {
         try {
           const res = await apiRequest({ endpoint: "users/profile", method: "GET" });
 
-          if (res?.error === "Unauthorized") {
-            console.warn("⚠️ No se pudo validar sesión. No se cerrará la sesión automáticamente.");
+          if (!res) {
+            console.warn("⚠️ Token inválido o sesión no válida. Cerrando sesión.");
+            logout();
             return;
           }
 
+          // ✅ Si el token es válido, actualizamos los datos del usuario
           setUser(res);
         } catch (error) {
           console.error("❌ Error al validar sesión:", error);
+          logout(); // cerramos sesión si hay error inesperado
         }
       };
 

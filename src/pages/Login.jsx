@@ -2,15 +2,16 @@ import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { apiRequest } from "../utils/apiRequest";
 import { AuthContext } from "../context/AuthContext";
+import Loader from "../components/Loader"; // 👈 Importamos el loader
 import "../styles/Login.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false); // 👈 Añadimos loading
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
-  // ✅ Manejar cambios en los inputs
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -18,6 +19,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+    setLoading(true); // 🔄 Activamos el loader
 
     try {
       const data = await apiRequest({
@@ -38,7 +40,6 @@ const Login = () => {
     } catch (error) {
       console.error("❌ Error en login:", error);
 
-      // Manejo específico de errores
       if (error.message.includes("Credenciales inválidas")) {
         setError("❌ Correo o contraseña incorrectos.");
       } else if (error.message.includes("Usuario no encontrado")) {
@@ -46,8 +47,19 @@ const Login = () => {
       } else {
         setError("❌ Error al iniciar sesión. Inténtalo de nuevo.");
       }
+    } finally {
+      setLoading(false); // ✅ Ocultamos el loader
     }
   };
+
+  // 🔄 Mostrar loader mientras se procesa
+  if (loading) {
+    return (
+      <div className="fullpage-loader">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="login-page">

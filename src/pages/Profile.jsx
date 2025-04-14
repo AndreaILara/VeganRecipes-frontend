@@ -4,6 +4,8 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "../styles/Profile.css";
 import imageCompression from "browser-image-compression";
+import Loader from "../components/Loader";
+
 
 const Profile = () => {
   const { user, logout, setUser } = useContext(AuthContext);
@@ -39,7 +41,7 @@ const Profile = () => {
       const reader = new FileReader();
       reader.readAsDataURL(compressedFile);
       reader.onloadend = () => {
-        setAvatar(reader.result); // Guardamos la imagen en base64 antes de enviarla
+        setAvatar(reader.result);
       };
     } catch (error) {
       console.error("❌ Error al comprimir la imagen:", error);
@@ -60,7 +62,6 @@ const Profile = () => {
     try {
       const updateData = { username: formData.username, email: formData.email, avatar };
 
-      // Solo incluir la contraseña si el usuario la cambió
       if (formData.password) {
         if (!validarContraseña(formData.password)) {
           setMessage("❌ La nueva contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un símbolo especial.");
@@ -76,7 +77,7 @@ const Profile = () => {
         body: updateData,
       });
 
-      localStorage.setItem("user", JSON.stringify(updatedUser.user)); // Guardar en localStorage
+      localStorage.setItem("user", JSON.stringify(updatedUser.user));
       setUser(updatedUser.user);
       setAvatar(updatedUser.user.avatar);
 
@@ -88,6 +89,34 @@ const Profile = () => {
       setLoading(false);
     }
   };
+
+  const handleDeleteAccount = async () => {
+    const confirmDelete = window.confirm("⚠️ Esta acción eliminará tu cuenta permanentemente. ¿Estás seguro?");
+    if (!confirmDelete) return;
+
+    try {
+      const res = await apiRequest({
+        endpoint: "users/delete",
+        method: "DELETE",
+      });
+
+      if (res?.message === "Cuenta eliminada") {
+        alert("Tu cuenta ha sido eliminada con éxito.");
+        logout();
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("❌ Error al eliminar cuenta:", error);
+      alert("No se pudo eliminar la cuenta.");
+    }
+  };
+  if (loading) {
+    return (
+      <div className="fullpage-loader">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="profile-page">
@@ -126,6 +155,10 @@ const Profile = () => {
         </form>
 
         <button className="btn-logout" onClick={logout}>Cerrar Sesión</button>
+
+        <button className="btn-delete-account" onClick={handleDeleteAccount}>
+          Eliminar mi cuenta
+        </button>
       </div>
     </div>
   );

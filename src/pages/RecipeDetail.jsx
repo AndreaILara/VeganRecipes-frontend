@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { apiRequest } from "../utils/apiRequest";
+import Loader from "../components/Loader";
 import "../styles/RecipeDetail.css";
 import heartRed from "../../public/heart-red.png";
 import heartBig from "../../public/heart-big.png";
@@ -110,7 +111,6 @@ const RecipeDetail = () => {
     }
   };
 
-
   const handleDeleteComment = async (commentId) => {
     if (!user) return;
 
@@ -130,7 +130,15 @@ const RecipeDetail = () => {
     }
   };
 
-  if (loading) return <p className="recipe-loading">Cargando receta...</p>;
+  // Loader de carga general
+  if (loading) {
+    return (
+      <div className="fullpage-loader">
+        <Loader />
+      </div>
+    );
+  }
+
   if (!recipe) return <p className="recipe-error">No se encontró la receta.</p>;
 
   return (
@@ -145,19 +153,18 @@ const RecipeDetail = () => {
         </button>
       </div>
 
-      {/* 🔹 Barra de información de la receta */}
       <div className="recipe-info-bar">
         <span>⏳ Tiempo de preparación: {recipe.prepTime || "10m"}</span>
         <span>🔥 Cocción: {recipe.cookTime || "20m"}</span>
         <span>🍽️ Porciones: {recipe.servings || "2"}</span>
       </div>
+
       {user?.role === "admin" && (
         <button className="edit-recipe-button" onClick={() => navigate(`/editar-receta/${id}`)}>
           ✏️ Editar Receta
         </button>
       )}
 
-      {/* 🔹 Ingredientes y Pasos */}
       <div className="recipe-content">
         <div className="recipe-ingredients">
           <h2 className="recipe-subtitle">Ingredientes</h2>
@@ -181,6 +188,7 @@ const RecipeDetail = () => {
           </ol>
         </div>
       </div>
+
       <button className="back-button" onClick={() => {
         const formattedCategory = recipe.category.toLowerCase().replace(/\s+/g, "-") + "s";
         navigate(`/recetas/categoria/${formattedCategory}`);
@@ -220,7 +228,6 @@ const RecipeDetail = () => {
                 </div>
               </li>
             ))}
-
           </ul>
         )}
       </div>

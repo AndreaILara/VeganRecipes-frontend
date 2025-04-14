@@ -128,3 +128,37 @@
 .switch-auth a:hover {
   color: #6ea12e;
 }
+
+/* 🔹 Nuevos estilos para errores y ayuda */
+.input-error {
+  font-size: 0.9rem;
+  margin-top: 5px;
+  color: red;
+}
+
+.input-help {
+  font-size: 0.9rem;
+  margin-top: 5px;
+  color: red;
+}
+
+/* 🔐 Mostrar/ocultar contraseña */
+.password-wrapper {
+  position: relative;
+  display: flex;
+}
+
+.password-wrapper input {
+  flex: 1;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}

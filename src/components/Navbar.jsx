@@ -7,14 +7,19 @@ import logo from "/logo.png";
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false); // Estado para la hamburguesa
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    setMenuOpen(false);
+  };
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
         {/* Logo */}
         <div className="navbar-logo">
-          <Link to="/">
+          <Link to="/" onClick={() => setMenuOpen(false)}>
             <img src={logo} alt="Tu Rincón Vegano" />
           </Link>
         </div>
@@ -24,13 +29,11 @@ const Navbar = () => {
           ☰
         </button>
 
-        {/* Menú principal */}
+        {/* Menú desplegable */}
         <ul className={`navbar-menu ${menuOpen ? "active" : ""}`}>
           <li><Link to="/" onClick={() => setMenuOpen(false)}>Inicio</Link></li>
-          <li
-            className="dropdown"
-            onClick={() => setShowDropdown(!showDropdown)}
-          >
+
+          <li className="dropdown" onClick={() => setShowDropdown(!showDropdown)}>
             <span>Recetas ▼</span>
             {showDropdown && (
               <ul className="dropdown-menu">
@@ -41,23 +44,26 @@ const Navbar = () => {
               </ul>
             )}
           </li>
-        </ul>
 
-        {/* Menú de usuario */}
-        <div className="user-menu">
           {user ? (
             <>
-              <Link to="/perfil" className="user-profile">
-                <img src={user.avatar || "/default-avatar.jpg"} alt="Perfil" className="profile-pic-navbar" />
-              </Link>
-              <Link to="/favoritos" className="btn-favorites">❤️</Link>
-              {user.role === "admin" && <Link to="/admin" className="btn-admin">➕</Link>}
-              <button onClick={logout} className="btn-logout">Cerrar sesión</button>
+              <li>
+                <Link to="/perfil" className="user-profile" onClick={() => setMenuOpen(false)}>
+                  <img src={user.avatar || "/default-avatar.jpg"} alt="Perfil" className="profile-pic-navbar" />
+                </Link>
+              </li>
+              <li><Link to="/favoritos" onClick={() => setMenuOpen(false)}>Favoritos</Link></li>
+              {user.role === "admin" && (
+                <li><Link to="/admin" onClick={() => setMenuOpen(false)}>Panel Admin</Link></li>
+              )}
+              <li>
+                <button onClick={handleLogout} className="btn-logout">Cerrar sesión</button>
+              </li>
             </>
           ) : (
-            <Link to="/register" className="btn-login">Únete</Link>
+            <li><Link to="/register" onClick={() => setMenuOpen(false)}>Únete</Link></li>
           )}
-        </div>
+        </ul>
       </div>
     </nav>
   );

@@ -7,14 +7,15 @@ import "./styles/style.css";
 function App() {
   return (
     <AuthProvider>
-      <div>
+      <div className="app-wrapper">
         <Navbar />
-        <main>
+        <main className="main-content">
           <HeroSlider />
         </main>
         <Footer />
       </div>
     </AuthProvider>
+
   );
 }
 
